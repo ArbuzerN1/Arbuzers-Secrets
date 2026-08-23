@@ -14,7 +14,7 @@
         body {
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, sans-serif;
-            background: #0a0a0a;
+            background: #1a0000;
             padding: 20px;
             overflow: hidden;
             height: 100vh;
@@ -31,9 +31,10 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            background: #0a0a0a;
+            background: linear-gradient(135deg, #1a0000 0%, #2a0000 50%, #1a0000 100%);
         }
 
+        /* УЛУЧШЕННЫЙ VHS ЭФФЕКТ */
         .vhs-overlay {
             position: absolute;
             top: 0;
@@ -41,13 +42,13 @@
             width: 100%;
             height: 100%;
             background: repeating-linear-gradient(0deg,
-                    rgba(0, 0, 0, 0.05) 0px,
-                    rgba(0, 0, 0, 0.05) 1px,
-                    rgba(255, 255, 255, 0.02) 1px,
-                    rgba(255, 255, 255, 0.02) 2px,
-                    rgba(0, 0, 0, 0.03) 2px,
-                    rgba(0, 0, 0, 0.03) 3px);
-            animation: vhsScan 15s linear infinite;
+                    rgba(0, 0, 0, 0.1) 0px,
+                    rgba(0, 0, 0, 0.1) 2px,
+                    rgba(255, 0, 0, 0.05) 2px,
+                    rgba(255, 0, 0, 0.05) 4px,
+                    rgba(0, 0, 0, 0.08) 4px,
+                    rgba(0, 0, 0, 0.08) 6px);
+            animation: vhsScan 10s linear infinite;
             pointer-events: none;
         }
 
@@ -57,10 +58,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 30% 40%, rgba(255, 0, 0, 0.04) 0%, transparent 60%),
-                radial-gradient(circle at 70% 60%, rgba(0, 255, 0, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 50% 80%, rgba(255, 0, 255, 0.02) 0%, transparent 40%);
-            animation: noisePulse 4s ease-in-out infinite alternate;
+            background: radial-gradient(circle at 30% 40%, rgba(255, 0, 0, 0.1) 0%, transparent 60%),
+                radial-gradient(circle at 70% 60%, rgba(0, 255, 0, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(255, 0, 255, 0.05) 0%, transparent 40%);
+            animation: noisePulse 3s ease-in-out infinite alternate;
             pointer-events: none;
         }
 
@@ -71,10 +72,32 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="3" stitchTiles="stitch"/></filter><rect width="300" height="300" filter="url(%23n)" opacity="0.05"/></svg>');
-            background-size: 500px 500px;
-            animation: noiseMove 0.4s steps(2) infinite;
-            opacity: 0.6;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/></filter><rect width="300" height="300" filter="url(%23n)" opacity="0.15"/></svg>');
+            background-size: 200px 200px;
+            animation: noiseMove 0.2s steps(4) infinite;
+            opacity: 1;
+        }
+
+        /* Добавляем глитч-полосы */
+        .vhs-glitch {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 0, 0, 0.6);
+            animation: glitchMove 4s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes glitchMove {
+            0% { top: 10%; opacity: 0; }
+            5% { opacity: 0.8; }
+            10% { top: 30%; opacity: 0; }
+            50% { top: 70%; opacity: 0.5; }
+            55% { opacity: 0.2; }
+            60% { top: 90%; opacity: 0; }
+            100% { top: 10%; opacity: 0; }
         }
 
         @keyframes vhsScan {
@@ -83,55 +106,56 @@
         }
 
         @keyframes noisePulse {
-            0% { opacity: 0.2; }
-            100% { opacity: 0.6; }
+            0% { opacity: 0.4; }
+            100% { opacity: 0.9; }
         }
 
         @keyframes noiseMove {
             0% { transform: translate(0, 0); }
-            100% { transform: translate(-4%, -4%); }
+            100% { transform: translate(-5%, -5%); }
         }
 
+        /* КРУГОВОЕ ДВИЖЕНИЕ - ЧАСОВАЯ СТРЕЛКА */
         .interface-wrapper {
             position: relative;
             z-index: 1;
             width: 100%;
-            max-width: 820px;
+            max-width: 850px;
             margin: 0 auto;
-            animation: floatInterface 20s linear infinite;
+            animation: circularMove 25s linear infinite;
             transform-origin: center center;
         }
 
-        @keyframes floatInterface {
-            0% { transform: translate(0px, 0px) rotate(0deg); }
-            12.5% { transform: translate(5px, -3px) rotate(0.3deg); }
-            25% { transform: translate(8px, 0px) rotate(0deg); }
-            37.5% { transform: translate(5px, 3px) rotate(-0.3deg); }
-            50% { transform: translate(0px, 5px) rotate(0deg); }
-            62.5% { transform: translate(-5px, 3px) rotate(0.3deg); }
-            75% { transform: translate(-8px, 0px) rotate(0deg); }
-            87.5% { transform: translate(-5px, -3px) rotate(-0.3deg); }
-            100% { transform: translate(0px, 0px) rotate(0deg); }
+        @keyframes circularMove {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            12.5% { transform: translate(10px, -10px) rotate(1deg); }
+            25% { transform: translate(15px, 0) rotate(0deg); }
+            37.5% { transform: translate(10px, 10px) rotate(-1deg); }
+            50% { transform: translate(0, 15px) rotate(0deg); }
+            62.5% { transform: translate(-10px, 10px) rotate(1deg); }
+            75% { transform: translate(-15px, 0) rotate(0deg); }
+            87.5% { transform: translate(-10px, -10px) rotate(-1deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
         }
 
         .container {
             width: 100%;
-            background: rgba(17, 17, 17, 0.92);
+            background: rgba(20, 0, 0, 0.95);
             border-radius: 24px;
             padding: 40px 30px;
-            box-shadow: 0 0 60px rgba(255, 0, 0, 0.12), inset 0 0 80px rgba(255, 0, 0, 0.03);
-            border: 1px solid #2a1a1a;
-            backdrop-filter: blur(2px);
+            box-shadow: 0 0 80px rgba(255, 0, 0, 0.25), inset 0 0 100px rgba(255, 0, 0, 0.05);
+            border: 2px solid #ff1a1a;
+            backdrop-filter: blur(3px);
             max-height: 90vh;
             overflow-y: auto;
             transition: all 0.5s ease;
         }
 
         .container::-webkit-scrollbar {
-            width: 4px;
+            width: 6px;
         }
         .container::-webkit-scrollbar-track {
-            background: #1a1a1a;
+            background: #2a0000;
             border-radius: 10px;
         }
         .container::-webkit-scrollbar-thumb {
@@ -141,24 +165,24 @@
 
         .title-wrapper {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             position: relative;
         }
 
         h1 {
             display: inline-block;
-            font-size: 2.8rem;
-            letter-spacing: 2px;
+            font-size: 3rem;
+            letter-spacing: 3px;
             font-weight: 900;
-            background: linear-gradient(135deg, #ff1a1a 0%, #66ff66 50%, #ff1a1a 100%);
+            background: linear-gradient(135deg, #ff0000 0%, #ff4444 50%, #ff0000 100%);
             background-size: 300% 300%;
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: gradientShift 6s ease infinite;
-            text-shadow: 0 0 40px rgba(255, 0, 0, 0.15);
+            animation: gradientShift 4s ease infinite;
+            text-shadow: 0 0 50px rgba(255, 0, 0, 0.3);
             position: relative;
-            padding: 0 10px;
+            padding: 0 15px;
         }
 
         @keyframes gradientShift {
@@ -181,15 +205,15 @@
             height: calc(100% + 10px);
             background: repeating-linear-gradient(90deg,
                     transparent 0px,
-                    transparent 0.6em,
-                    rgba(255, 255, 255, 0.06) 0.6em,
-                    rgba(255, 255, 255, 0.06) 0.65em,
-                    transparent 0.65em,
-                    transparent 1.2em,
-                    rgba(0, 255, 0, 0.04) 1.2em,
-                    rgba(0, 255, 0, 0.04) 1.25em,
-                    transparent 1.25em,
-                    transparent 1.8em);
+                    transparent 0.5em,
+                    rgba(255, 0, 0, 0.1) 0.5em,
+                    rgba(255, 0, 0, 0.1) 0.55em,
+                    transparent 0.55em,
+                    transparent 1em,
+                    rgba(255, 0, 0, 0.05) 1em,
+                    rgba(255, 0, 0, 0.05) 1.05em,
+                    transparent 1.05em,
+                    transparent 1.5em);
             pointer-events: none;
             border-radius: 4px;
             mix-blend-mode: overlay;
@@ -203,22 +227,37 @@
             height: 100%;
             background: linear-gradient(90deg,
                     transparent 0%,
-                    rgba(255, 0, 0, 0.02) 20%,
+                    rgba(255, 0, 0, 0.05) 20%,
                     transparent 40%,
-                    rgba(0, 255, 0, 0.02) 60%,
+                    rgba(255, 0, 0, 0.05) 60%,
                     transparent 80%);
             pointer-events: none;
             border-radius: 4px;
+            animation: titleGlitch 2s linear infinite;
+        }
+
+        @keyframes titleGlitch {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-3px); }
+            50% { transform: translateX(3px); }
+            75% { transform: translateX(-1px); }
+            100% { transform: translateX(0); }
         }
 
         .title-sparkle {
             position: absolute;
             top: -15px;
             right: -10px;
-            font-size: 1.5rem;
-            color: #66ff66;
-            opacity: 0.4;
-            filter: drop-shadow(0 0 20px #66ff66);
+            font-size: 1.8rem;
+            color: #ff4444;
+            opacity: 0.6;
+            filter: drop-shadow(0 0 20px #ff4444);
+            animation: sparklePulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes sparklePulse {
+            0%, 100% { opacity: 0.4; transform: scale(0.9); }
+            50% { opacity: 0.8; transform: scale(1.2); }
         }
 
         .lock-screen {
@@ -230,60 +269,60 @@
         }
 
         .lock-screen label {
-            color: #ff4d4d;
-            font-size: 1.2rem;
-            font-weight: 500;
+            color: #ff4444;
+            font-size: 1.3rem;
+            font-weight: 600;
             letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
         }
 
         .lock-screen input {
-            background: #1a1a1a;
-            border: 2px solid #3a1a1a;
+            background: #2a0000;
+            border: 3px solid #ff1a1a;
             border-radius: 50px;
-            padding: 14px 24px;
+            padding: 15px 25px;
             width: 100%;
-            max-width: 280px;
-            font-size: 1.3rem;
+            max-width: 300px;
+            font-size: 1.4rem;
             text-align: center;
-            color: #ff9999;
+            color: #ff7777;
             outline: none;
             transition: 0.3s;
             letter-spacing: 3px;
         }
 
         .lock-screen input:focus {
-            border-color: #66ff66;
-            box-shadow: 0 0 35px rgba(102, 255, 102, 0.15);
+            border-color: #ff4444;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.3);
         }
 
         .lock-screen button {
-            background: transparent;
-            border: 2px solid #ff1a1a;
-            color: #ff4d4d;
-            padding: 12px 44px;
+            background: linear-gradient(135deg, #ff0000, #ff4444);
+            border: 2px solid #ff6666;
+            color: #ffffff;
+            padding: 14px 50px;
             border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: 600;
+            font-size: 1.3rem;
+            font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
             letter-spacing: 2px;
-            background: rgba(255, 0, 0, 0.05);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
         }
 
         .lock-screen button:hover {
-            background: #ff1a1a;
-            color: #0a0a0a;
-            border-color: #66ff66;
-            box-shadow: 0 0 40px rgba(255, 0, 0, 0.3);
-            transform: scale(1.05);
+            background: linear-gradient(135deg, #ff4444, #ff6666);
+            border-color: #ff9999;
+            box-shadow: 0 0 60px rgba(255, 0, 0, 0.6);
+            transform: scale(1.05) rotate(1deg);
         }
 
         .error-msg {
             color: #ff3333;
-            font-size: 0.95rem;
+            font-size: 1rem;
             min-height: 1.5rem;
             margin-top: -10px;
-            text-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
         }
 
         .content {
@@ -294,22 +333,29 @@
 
         .content.active {
             display: flex;
+            animation: contentFadeIn 0.8s ease;
+        }
+
+        @keyframes contentFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .record {
-            background: #141010;
-            border-left: 6px solid #ff1a1a;
+            background: #1a0000;
+            border-left: 8px solid #ff0000;
             border-radius: 16px;
-            padding: 22px 26px;
+            padding: 25px 30px;
             transition: all 0.4s ease;
-            box-shadow: 0 4px 20px rgba(255, 0, 0, 0.05);
-            color: #ffb3b3;
-            font-size: 1.1rem;
-            line-height: 1.7;
+            box-shadow: 0 4px 30px rgba(255, 0, 0, 0.1);
+            color: #ffaaaa;
+            font-size: 1.15rem;
+            line-height: 1.8;
             position: relative;
             opacity: 0;
             transform: translateX(-30px);
             animation: slideIn 0.8s ease forwards;
+            border: 1px solid #ff1a1a;
         }
 
         .record:nth-child(1) { animation-delay: 0.2s; }
@@ -324,45 +370,47 @@
         }
 
         .record:hover {
-            border-left-color: #66ff66;
-            box-shadow: 0 0 40px rgba(102, 255, 102, 0.06);
-            transform: scale(1.01) translateX(5px);
+            border-left-color: #ff4444;
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.2);
+            transform: scale(1.02) translateX(5px);
+            background: #2a0000;
         }
 
         .record::before {
             content: "✦";
-            color: #66ff66;
+            color: #ff4444;
             position: absolute;
-            left: -14px;
+            left: -16px;
             top: 20px;
-            font-size: 1.6rem;
-            text-shadow: 0 0 20px #66ff66;
+            font-size: 1.8rem;
+            text-shadow: 0 0 20px #ff4444;
         }
 
-        .record:first-child::before { content: "❶"; color: #ff4d4d; }
-        .record:nth-child(2)::before { content: "❷"; color: #ff9933; }
-        .record:last-child::before { content: "❸"; color: #66ff66; }
+        .record:first-child::before { content: "❶"; color: #ff0000; }
+        .record:nth-child(2)::before { content: "❷"; color: #ff4444; }
+        .record:last-child::before { content: "❸"; color: #ff6666; }
 
         .record strong {
-            color: #ff6666;
-            font-weight: 600;
+            color: #ff4444;
+            font-weight: 700;
         }
 
         .poll-section {
             margin-top: 20px;
-            padding: 24px 20px 20px;
-            border-top: 2px solid #1f1a1a;
+            padding: 25px 20px 20px;
+            border-top: 3px solid #ff1a1a;
             border-radius: 16px;
-            background: rgba(20, 16, 16, 0.6);
+            background: rgba(30, 0, 0, 0.8);
             text-align: center;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.1);
         }
 
         .poll-question {
-            color: #ffb3b3;
-            font-size: 1.05rem;
-            font-weight: 500;
+            color: #ffaaaa;
+            font-size: 1.1rem;
+            font-weight: 600;
             letter-spacing: 0.5px;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
             line-height: 1.5;
         }
 
@@ -374,15 +422,15 @@
         }
 
         .poll-btn {
-            padding: 12px 36px;
+            padding: 14px 40px;
             border: none;
             border-radius: 50px;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
             letter-spacing: 1px;
-            min-width: 100px;
+            min-width: 110px;
             position: relative;
             overflow: hidden;
         }
@@ -390,25 +438,25 @@
         .poll-btn-yes {
             background: #1a3a8a;
             color: #aaccff;
-            box-shadow: 0 0 25px rgba(50, 100, 255, 0.2);
+            box-shadow: 0 0 30px rgba(50, 100, 255, 0.3);
         }
 
         .poll-btn-yes:hover {
             background: #2a5acc;
-            transform: scale(1.08);
-            box-shadow: 0 0 50px rgba(50, 100, 255, 0.4);
+            transform: scale(1.08) rotate(1deg);
+            box-shadow: 0 0 60px rgba(50, 100, 255, 0.5);
         }
 
         .poll-btn-no {
             background: #5a1a1a;
             color: #ff7777;
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.2);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
         }
 
         .poll-btn-no:hover {
             background: #8a2a2a;
-            transform: scale(1.08);
-            box-shadow: 0 0 50px rgba(255, 0, 0, 0.4);
+            transform: scale(1.08) rotate(-1deg);
+            box-shadow: 0 0 60px rgba(255, 0, 0, 0.5);
         }
 
         .poll-btn:active {
@@ -418,90 +466,127 @@
         .poll-btn.selected-yes {
             background: #3a7aff;
             color: #ffffff;
-            box-shadow: 0 0 60px rgba(50, 100, 255, 0.6);
-            border: 2px solid #66ff66;
+            box-shadow: 0 0 70px rgba(50, 100, 255, 0.7);
+            border: 3px solid #ff4444;
         }
 
         .poll-btn.selected-no {
             background: #cc3333;
             color: #ffffff;
-            box-shadow: 0 0 60px rgba(255, 0, 0, 0.6);
-            border: 2px solid #ff3333;
+            box-shadow: 0 0 70px rgba(255, 0, 0, 0.7);
+            border: 3px solid #ff4444;
         }
 
         .poll-result {
-            margin-top: 16px;
+            margin-top: 20px;
             color: #888;
-            font-size: 0.95rem;
+            font-size: 1rem;
             letter-spacing: 1px;
         }
 
         .poll-result span {
-            color: #ffb3b3;
-            font-weight: 600;
+            color: #ffaaaa;
+            font-weight: 700;
         }
 
         .poll-error-msg {
-            margin-top: 14px;
+            margin-top: 15px;
             color: #ff3333;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            text-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+            text-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
             letter-spacing: 2px;
         }
 
+        /* ОБНОВЛЁННЫЕ КОММЕНТАРИИ С ЛАЙКАМИ */
         .comments-section {
             margin-top: 20px;
-            padding: 24px 20px 20px;
-            border-top: 2px solid #1f1a1a;
+            padding: 25px 20px 20px;
+            border-top: 3px solid #ff1a1a;
             border-radius: 16px;
-            background: rgba(20, 16, 16, 0.6);
+            background: rgba(30, 0, 0, 0.8);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.1);
         }
 
         .comments-title {
-            color: #ffb3b3;
-            font-size: 1.05rem;
-            font-weight: 500;
-            margin-bottom: 16px;
+            color: #ffaaaa;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
             text-align: center;
             letter-spacing: 1px;
         }
 
         .comments-list {
-            max-height: 200px;
+            max-height: 250px;
             overflow-y: auto;
-            margin-bottom: 12px;
-            padding-right: 8px;
+            margin-bottom: 15px;
+            padding-right: 10px;
+            border-right: 1px solid #ff1a1a;
         }
 
         .comments-list::-webkit-scrollbar {
-            width: 4px;
+            width: 5px;
         }
         .comments-list::-webkit-scrollbar-track {
-            background: #1a1a1a;
+            background: #1a0000;
             border-radius: 10px;
         }
         .comments-list::-webkit-scrollbar-thumb {
-            background: #ff4d4d;
+            background: #ff4444;
             border-radius: 10px;
         }
 
         .comment-item {
-            background: rgba(26, 26, 26, 0.6);
-            border-left: 3px solid #ff4d4d;
-            padding: 10px 14px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            color: #cc9999;
-            font-size: 0.95rem;
+            background: rgba(20, 0, 0, 0.8);
+            border-left: 4px solid #ff4444;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            color: #ff9999;
+            font-size: 1rem;
             line-height: 1.5;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .comment-item:hover {
+            background: rgba(30, 0, 0, 0.9);
+            border-left-color: #ff6666;
         }
 
         .comment-item .comment-time {
             color: #666;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             display: block;
-            margin-top: 4px;
+            margin-top: 5px;
+        }
+
+        .comment-item .like-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: 1px solid #ff4444;
+            color: #ff4444;
+            padding: 5px 10px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .comment-item .like-btn:hover {
+            background: #ff4444;
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+
+        .comment-item .like-btn.liked {
+            background: #ff4444;
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
         }
 
         .comment-input-area {
@@ -512,52 +597,53 @@
 
         .comment-input-area input {
             flex: 1;
-            min-width: 150px;
-            background: #1a1a1a;
-            border: 1px solid #3a1a1a;
+            min-width: 180px;
+            background: #1a0000;
+            border: 2px solid #ff1a1a;
             border-radius: 50px;
-            padding: 10px 18px;
-            color: #ffb3b3;
-            font-size: 0.95rem;
+            padding: 12px 20px;
+            color: #ffaaaa;
+            font-size: 1rem;
             outline: none;
             transition: 0.3s;
         }
 
         .comment-input-area input:focus {
-            border-color: #66ff66;
-            box-shadow: 0 0 20px rgba(102, 255, 102, 0.1);
+            border-color: #ff4444;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.2);
         }
 
         .comment-input-area input::placeholder {
-            color: #555;
+            color: #666;
         }
 
         .comment-input-area button {
-            background: transparent;
-            border: 1px solid #ff4d4d;
-            color: #ff4d4d;
-            padding: 10px 24px;
+            background: linear-gradient(135deg, #ff0000, #ff4444);
+            border: 2px solid #ff6666;
+            color: #ffffff;
+            padding: 12px 28px;
             border-radius: 50px;
             cursor: pointer;
             transition: 0.3s;
-            font-weight: 600;
-            font-size: 0.95rem;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
         }
 
         .comment-input-area button:hover {
-            background: #ff4d4d;
-            color: #0a0a0a;
-            border-color: #66ff66;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+            background: linear-gradient(135deg, #ff4444, #ff6666);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
         }
 
         .comment-empty {
-            color: #444;
+            color: #555;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             padding: 10px 0;
         }
 
+        /* СЕКРЕТНАЯ КОМНАТА */
         .secret-room {
             display: none;
             flex-direction: column;
@@ -567,42 +653,50 @@
 
         .secret-room.active {
             display: flex;
+            animation: secretFadeIn 0.8s ease;
+        }
+
+        @keyframes secretFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .secret-room .secret-title {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 900;
             text-align: center;
-            background: linear-gradient(135deg, #b366ff, #7a4dff, #4d4dff);
+            background: linear-gradient(135deg, #ff0000, #ff4444, #ff0000);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 60px rgba(102, 51, 255, 0.3);
-            letter-spacing: 2px;
+            text-shadow: 0 0 80px rgba(255, 0, 0, 0.5);
+            letter-spacing: 3px;
         }
 
         .secret-room .secret-text {
-            background: rgba(30, 20, 50, 0.6);
-            border-left: 6px solid #7a4dff;
+            background: rgba(30, 0, 0, 0.9);
+            border-left: 8px solid #ff0000;
             border-radius: 16px;
-            padding: 24px 28px;
-            color: #c9b3ff;
-            font-size: 1.1rem;
+            padding: 28px 32px;
+            color: #ffcccc;
+            font-size: 1.2rem;
             line-height: 1.8;
-            box-shadow: 0 0 40px rgba(102, 51, 255, 0.05);
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff1a1a;
         }
 
         .secret-room .secret-poll {
-            background: rgba(30, 20, 50, 0.4);
+            background: rgba(20, 0, 0, 0.7);
             border-radius: 16px;
-            padding: 24px 20px;
+            padding: 25px 20px;
             text-align: center;
-            border: 1px solid #3a2a6a;
+            border: 2px solid #ff1a1a;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.1);
         }
 
         .secret-room .secret-poll .poll-question {
-            color: #c9b3ff;
-            font-size: 1.2rem;
+            color: #ffcccc;
+            font-size: 1.3rem;
             margin-bottom: 20px;
         }
 
@@ -611,9 +705,9 @@
         }
 
         .secret-room .secret-poll .poll-btn {
-            min-width: 140px;
-            padding: 14px 40px;
-            font-size: 1.1rem;
+            min-width: 150px;
+            padding: 15px 45px;
+            font-size: 1.2rem;
             border-radius: 50px;
             border: 2px solid transparent;
             transition: 0.3s;
@@ -622,71 +716,71 @@
         .secret-poll-btn-yes {
             background: #1a2a6a;
             color: #aaccff;
-            box-shadow: 0 0 30px rgba(50, 50, 255, 0.2);
+            box-shadow: 0 0 40px rgba(50, 50, 255, 0.3);
         }
 
         .secret-poll-btn-yes:hover {
             background: #2a4a9a;
-            transform: scale(1.05);
-            box-shadow: 0 0 50px rgba(50, 50, 255, 0.4);
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: 0 0 60px rgba(50, 50, 255, 0.5);
         }
 
         .secret-poll-btn-no {
             background: #4a1a4a;
             color: #ff99cc;
-            box-shadow: 0 0 30px rgba(200, 50, 255, 0.2);
+            box-shadow: 0 0 40px rgba(200, 50, 255, 0.3);
         }
 
         .secret-poll-btn-no:hover {
             background: #6a2a6a;
-            transform: scale(1.05);
-            box-shadow: 0 0 50px rgba(200, 50, 255, 0.4);
+            transform: scale(1.05) rotate(-1deg);
+            box-shadow: 0 0 60px rgba(200, 50, 255, 0.5);
         }
 
         .secret-poll-btn.selected-yes {
             background: #3a5aff;
             color: #fff;
-            border-color: #66ff66;
-            box-shadow: 0 0 60px rgba(50, 100, 255, 0.6);
+            border-color: #ff4444;
+            box-shadow: 0 0 70px rgba(50, 100, 255, 0.7);
         }
 
         .secret-poll-btn.selected-no {
             background: #aa33aa;
             color: #fff;
-            border-color: #ff66ff;
-            box-shadow: 0 0 60px rgba(200, 50, 255, 0.6);
+            border-color: #ff4444;
+            box-shadow: 0 0 70px rgba(200, 50, 255, 0.7);
         }
 
         .secret-poll-result {
-            margin-top: 16px;
+            margin-top: 20px;
             color: #8877aa;
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
 
         .secret-poll-result span {
-            color: #c9b3ff;
-            font-weight: 600;
+            color: #ffcccc;
+            font-weight: 700;
         }
 
         .secret-back-btn {
-            background: transparent;
-            border: 2px solid #7a4dff;
-            color: #b366ff;
-            padding: 12px 30px;
+            background: linear-gradient(135deg, #ff0000, #ff4444);
+            border: 2px solid #ff6666;
+            color: #ffffff;
+            padding: 14px 35px;
             border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
+            font-size: 1.1rem;
+            font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
             letter-spacing: 2px;
             align-self: center;
             margin-top: 10px;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
         }
 
         .secret-back-btn:hover {
-            background: #7a4dff;
-            color: #0a0a0a;
-            box-shadow: 0 0 40px rgba(122, 77, 255, 0.3);
+            background: linear-gradient(135deg, #ff4444, #ff6666);
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
             transform: scale(1.05);
         }
 
@@ -702,19 +796,20 @@
 
         .footer-note {
             text-align: right;
-            margin-top: 10px;
-            font-size: 0.85rem;
-            color: #4a2a2a;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #cc5555;
             letter-spacing: 2px;
-            border-top: 1px solid #1f1a1a;
-            padding-top: 18px;
+            border-top: 2px solid #ff1a1a;
+            padding-top: 20px;
         }
 
         .footer-note span {
-            background: linear-gradient(135deg, #ff1a1a, #66ff66);
+            background: linear-gradient(135deg, #ff0000, #ff4444);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            font-weight: 700;
         }
 
         .fnaf-notification {
@@ -722,16 +817,16 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             color: #ff4444;
-            padding: 12px 24px;
+            padding: 14px 28px;
             border-radius: 12px;
-            border: 2px solid #ff4444;
+            border: 3px solid #ff4444;
             font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
+            font-size: 1rem;
             z-index: 99999;
             text-align: center;
-            box-shadow: 0 0 40px rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 60px rgba(255, 0, 0, 0.4);
             animation: fadeInUp 0.5s ease;
             pointer-events: none;
         }
@@ -742,7 +837,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.92);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 99998;
             display: flex;
             flex-direction: column;
@@ -754,16 +849,16 @@
 
         .fnaf-error-screen h2 {
             color: #ff0000;
-            font-size: 4rem;
+            font-size: 4.5rem;
             font-family: 'Courier New', monospace;
-            text-shadow: 0 0 60px rgba(255, 0, 0, 0.5);
-            letter-spacing: 8px;
+            text-shadow: 0 0 80px rgba(255, 0, 0, 0.7);
+            letter-spacing: 10px;
             animation: errorPulse 0.5s ease-in-out infinite alternate;
         }
 
         .fnaf-error-screen p {
             color: #aa0000;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-family: 'Courier New', monospace;
             margin-top: 20px;
             opacity: 0.8;
@@ -791,18 +886,18 @@
 
         @keyframes flashRed {
             0%, 100% { background-color: transparent; }
-            50% { background-color: rgba(255, 0, 0, 0.15); }
+            50% { background-color: rgba(255, 0, 0, 0.2); }
         }
 
         @media (max-width: 550px) {
             .container { padding: 24px 16px; }
-            h1 { font-size: 2rem; }
-            .record { font-size: 0.95rem; padding: 16px 14px; }
-            .poll-btn { padding: 10px 24px; font-size: 1rem; min-width: 80px; }
+            h1 { font-size: 2.2rem; }
+            .record { font-size: 0.95rem; padding: 18px 16px; }
+            .poll-btn { padding: 12px 28px; font-size: 1.05rem; min-width: 90px; }
             .poll-question { font-size: 0.95rem; }
-            .comment-input-area input { min-width: 120px; }
-            .secret-room .secret-title { font-size: 1.6rem; }
-            .secret-room .secret-text { font-size: 0.95rem; padding: 18px; }
+            .comment-input-area input { min-width: 140px; }
+            .secret-room .secret-title { font-size: 1.8rem; }
+            .secret-room .secret-text { font-size: 1rem; padding: 20px; }
         }
     </style>
 </head>
@@ -811,6 +906,7 @@
     <div class="bg-layer">
         <div class="vhs-overlay"></div>
         <div class="vhs-noise"></div>
+        <div class="vhs-glitch"></div>
     </div>
 
     <canvas id="fireworksCanvas"></canvas>
@@ -862,7 +958,7 @@
                 </div>
 
                 <div class="comments-section" id="commentsSection">
-                    <div class="comments-title">💬 Оставить комментарий (видят только создатели)</div>
+                    <div class="comments-title">💬 Комментарии (видят все)</div>
                     <div class="comments-list" id="commentsList">
                         <div class="comment-empty">Пока нет комментариев. Будьте первым!</div>
                     </div>
@@ -899,7 +995,7 @@
 
     <script>
         // ============================================================
-        // 1. ЗВУКИ
+        // 1. ЗВУКИ (улучшенные)
         // ============================================================
         const SoundFX = {
             ctx: null,
@@ -1055,9 +1151,8 @@
             window.isInSecret = () => isInSecret;
         })();
 
-
         // ============================================================
-        // 3. ОПРОС
+        // 3. ОПРОС (улучшенный)
         // ============================================================
         (function() {
             const pollYes = document.getElementById('pollYes');
@@ -1179,12 +1274,12 @@
                 fwCanvas.height = window.innerHeight;
                 fwCtx = fwCanvas.getContext('2d');
 
-                const colors = ['#ff4444', '#66ff66', '#ffaa00', '#ff66ff', '#44ddff', '#ff3333', '#88ff88'];
-                const count = 80;
+                const colors = ['#ff0000', '#ff4444', '#ff6666', '#ffaaaa', '#ff3333', '#ff9999'];
+                const count = 100;
 
                 for (let i = 0; i < count; i++) {
                     const angle = Math.random() * Math.PI * 2;
-                    const speed = Math.random() * 6 + 2;
+                    const speed = Math.random() * 7 + 3;
                     const x = Math.random() * fwCanvas.width;
                     const y = Math.random() * fwCanvas.height * 0.6 + fwCanvas.height * 0.1;
                     particles.push({
@@ -1264,9 +1359,8 @@
             window.launchFireworks = launchFireworks;
         })();
 
-
         // ============================================================
-        // 4. КОММЕНТАРИИ
+        // 4. КОММЕНТАРИИ С ЛАЙКАМИ
         // ============================================================
         (function() {
             const COMMENTS_KEY = 'arbuzers_comments';
@@ -1292,7 +1386,7 @@
                 }
 
                 let html = '';
-                comments.forEach(c => {
+                comments.forEach((c, index) => {
                     const time = new Date(c.time).toLocaleString('ru-RU', {
                         day: '2-digit',
                         month: '2-digit',
@@ -1300,16 +1394,35 @@
                         hour: '2-digit',
                         minute: '2-digit'
                     });
+                    const likes = c.likes || 0;
                     html += `
-                        <div class="comment-item">
-                            ${c.text}
+                        <div class="comment-item" data-index="${index}">
+                            <div>${c.text}</div>
                             <span class="comment-time">${time}</span>
+                            <button class="like-btn" data-index="${index}" onclick="toggleLike(${index})">❤️ ${likes}</button>
                         </div>
                     `;
                 });
                 commentsList.innerHTML = html;
                 commentsList.scrollTop = commentsList.scrollHeight;
             }
+
+            window.toggleLike = function(index) {
+                const stored = localStorage.getItem(COMMENTS_KEY);
+                let comments = [];
+                if (stored) {
+                    try {
+                        comments = JSON.parse(stored);
+                    } catch (e) {}
+                }
+                
+                if (comments[index]) {
+                    comments[index].likes = (comments[index].likes || 0) + 1;
+                    localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments));
+                    renderComments(comments);
+                    SoundFX.click();
+                }
+            };
 
             function addComment() {
                 const text = commentInput.value.trim();
@@ -1326,7 +1439,8 @@
 
                 comments.push({
                     text: text,
-                    time: Date.now()
+                    time: Date.now(),
+                    likes: 0
                 });
 
                 localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments));
@@ -1344,7 +1458,6 @@
 
             window.loadComments();
         })();
-
 
         // ============================================================
         // 5. СЕКРЕТНЫЙ ОПРОС
@@ -1377,7 +1490,6 @@
                 SoundFX.click();
                 const stored = localStorage.getItem(SECRET_POLL_KEY);
                 if (stored) {
-                    // Не даём изменить ответ
                     return;
                 }
                 localStorage.setItem(SECRET_POLL_KEY, choice);
@@ -1398,9 +1510,8 @@
             window.loadSecretPoll = loadSecretPoll;
         })();
 
-
         // ============================================================
-        // 6. ПАСХАЛКА FNAF (ПРИ НАЖАТИИ НА ВОЙТИ)
+        // 6. ПАСХАЛКА FNAF (МУЗЫКА + ЭКРАН)
         // ============================================================
         let fnafTriggered = false;
 
@@ -1411,29 +1522,8 @@
             try {
                 const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
 
-                // Та самая мелодия из FNAF 1 (когда кончается энергия)
+                // Точная мелодия из FNAF 1 (power outage)
                 const notes = [
-                    { freq: 466.16, dur: 0.2 },
-                    { freq: 466.16, dur: 0.2 },
-                    { freq: 466.16, dur: 0.2 },
-                    { freq: 466.16, dur: 0.2 },
-                    { freq: 466.16, dur: 0.4 },
-                    { freq: 415.30, dur: 0.2 },
-                    { freq: 415.30, dur: 0.2 },
-                    { freq: 415.30, dur: 0.2 },
-                    { freq: 415.30, dur: 0.2 },
-                    { freq: 415.30, dur: 0.4 },
-                    { freq: 369.99, dur: 0.2 },
-                    { freq: 369.99, dur: 0.2 },
-                    { freq: 369.99, dur: 0.2 },
-                    { freq: 369.99, dur: 0.2 },
-                    { freq: 369.99, dur: 0.4 },
-                    { freq: 311.13, dur: 0.4 },
-                    { freq: 311.13, dur: 0.4 },
-                    { freq: 311.13, dur: 0.4 },
-                    { freq: 311.13, dur: 0.4 },
-                    { freq: 311.13, dur: 0.4 },
-                    { freq: 311.13, dur: 0.4 },
                     { freq: 466.16, dur: 0.15 },
                     { freq: 466.16, dur: 0.15 },
                     { freq: 466.16, dur: 0.15 },
@@ -1449,12 +1539,33 @@
                     { freq: 369.99, dur: 0.15 },
                     { freq: 369.99, dur: 0.15 },
                     { freq: 369.99, dur: 0.3 },
-                    { freq: 311.13, dur: 0.3 },
-                    { freq: 311.13, dur: 0.3 },
-                    { freq: 311.13, dur: 0.3 },
-                    { freq: 311.13, dur: 0.3 },
-                    { freq: 311.13, dur: 0.3 },
-                    { freq: 311.13, dur: 0.3 },
+                    { freq: 311.13, dur: 0.25 },
+                    { freq: 311.13, dur: 0.25 },
+                    { freq: 311.13, dur: 0.25 },
+                    { freq: 311.13, dur: 0.25 },
+                    { freq: 311.13, dur: 0.25 },
+                    { freq: 311.13, dur: 0.25 },
+                    { freq: 466.16, dur: 0.12 },
+                    { freq: 466.16, dur: 0.12 },
+                    { freq: 466.16, dur: 0.12 },
+                    { freq: 466.16, dur: 0.12 },
+                    { freq: 466.16, dur: 0.24 },
+                    { freq: 415.30, dur: 0.12 },
+                    { freq: 415.30, dur: 0.12 },
+                    { freq: 415.30, dur: 0.12 },
+                    { freq: 415.30, dur: 0.12 },
+                    { freq: 415.30, dur: 0.24 },
+                    { freq: 369.99, dur: 0.12 },
+                    { freq: 369.99, dur: 0.12 },
+                    { freq: 369.99, dur: 0.12 },
+                    { freq: 369.99, dur: 0.12 },
+                    { freq: 369.99, dur: 0.24 },
+                    { freq: 311.13, dur: 0.2 },
+                    { freq: 311.13, dur: 0.2 },
+                    { freq: 311.13, dur: 0.2 },
+                    { freq: 311.13, dur: 0.2 },
+                    { freq: 311.13, dur: 0.2 },
+                    { freq: 311.13, dur: 0.2 },
                 ];
 
                 let time = 0;
@@ -1463,7 +1574,7 @@
                     const gain = audioCtx.createGain();
                     osc.type = 'sawtooth';
                     osc.frequency.value = note.freq;
-                    gain.gain.setValueAtTime(0.12, audioCtx.currentTime + time);
+                    gain.gain.setValueAtTime(0.15, audioCtx.currentTime + time);
                     gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + time + note.dur);
                     osc.connect(gain);
                     gain.connect(audioCtx.destination);
@@ -1500,19 +1611,51 @@
         }
 
         // ============================================================
-        // 7. ЗВУКИ ДЛЯ ВСЕХ КНОПОК
+        // 7. ДОПОЛНИТЕЛЬНЫЕ ФУНКЦИИ
         // ============================================================
-        document.addEventListener('click', (e) => {
-            if (e.target.closest('button') || e.target.closest('.poll-btn')) {
-                // Звук уже проигрывается в обработчиках
+        
+        // Автосохранение
+        function autoSave() {
+            console.log('💾 Автосохранение...');
+            // Здесь можно добавить сохранение состояния
+        }
+        
+        // Уведомления
+        function showNotification(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = 'fnaf-notification';
+            div.style.borderColor = type === 'error' ? '#ff0000' : '#ff4444';
+            div.style.color = type === 'error' ? '#ff0000' : '#ff6666';
+            div.textContent = message;
+            document.body.appendChild(div);
+            
+            setTimeout(() => {
+                div.style.animation = 'fadeInUp 0.3s ease reverse';
+                setTimeout(() => div.remove(), 300);
+            }, 3000);
+        }
+
+        // Горячие клавиши
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                autoSave();
+                showNotification('💾 Сохранено!', 'info');
             }
         });
 
-        console.log('🍉 ARBUZERS SECRETS v2.0');
+        // Контекстное меню
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            showNotification('🚫 Правая кнопка отключена', 'error');
+        });
+
+        console.log('🍉 ARBUZERS SECRETS v3.0');
         console.log('🔑 Пароль: 3417');
         console.log('🔐 Секретная комната: 2305');
         console.log('🎃 Пасхалка: 1987 (при вводе)');
+        console.log('🖱️ Горячие клавиши: Ctrl+S для сохранения');
     </script>
 
 </body>
-    </html>
+    </html>           
