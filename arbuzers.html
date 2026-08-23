@@ -14,17 +14,16 @@
         body {
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #0a0a0a;
+            padding: 20px;
+            overflow: hidden;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #0a0a0a;
-            padding: 20px;
             position: relative;
-            overflow: hidden;
-            height: 100vh;
         }
 
-        /* ===== ФОН С ПОМЕХАМИ (ТОЛЬКО СЗАДИ) ===== */
         .bg-layer {
             position: fixed;
             top: 0;
@@ -41,8 +40,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                repeating-linear-gradient(0deg,
+            background: repeating-linear-gradient(0deg,
                     rgba(0, 0, 0, 0.05) 0px,
                     rgba(0, 0, 0, 0.05) 1px,
                     rgba(255, 255, 255, 0.02) 1px,
@@ -59,8 +57,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 30% 40%, rgba(255, 0, 0, 0.04) 0%, transparent 60%),
+            background: radial-gradient(circle at 30% 40%, rgba(255, 0, 0, 0.04) 0%, transparent 60%),
                 radial-gradient(circle at 70% 60%, rgba(0, 255, 0, 0.03) 0%, transparent 50%),
                 radial-gradient(circle at 50% 80%, rgba(255, 0, 255, 0.02) 0%, transparent 40%);
             animation: noisePulse 4s ease-in-out infinite alternate;
@@ -80,50 +77,6 @@
             opacity: 0.6;
         }
 
-        .vhs-bars {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(0deg,
-                    transparent 0px,
-                    transparent 40px,
-                    rgba(255, 0, 0, 0.02) 40px,
-                    rgba(255, 0, 0, 0.02) 41px,
-                    transparent 41px,
-                    transparent 80px,
-                    rgba(0, 255, 0, 0.015) 80px,
-                    rgba(0, 255, 0, 0.015) 81px,
-                    transparent 81px,
-                    transparent 120px);
-            animation: vhsBars 10s linear infinite;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        .vhs-glitch {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(90deg,
-                    transparent 0px,
-                    transparent 150px,
-                    rgba(255, 255, 255, 0.015) 150px,
-                    rgba(255, 255, 255, 0.015) 151px,
-                    transparent 151px,
-                    transparent 300px,
-                    rgba(255, 0, 0, 0.01) 300px,
-                    rgba(255, 0, 0, 0.01) 301px,
-                    transparent 301px,
-                    transparent 450px);
-            animation: glitchMove 7s linear infinite;
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
         @keyframes vhsScan {
             0% { transform: translateY(0); }
             100% { transform: translateY(100%); }
@@ -139,21 +92,29 @@
             100% { transform: translate(-4%, -4%); }
         }
 
-        @keyframes vhsBars {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
-        @keyframes glitchMove {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        /* ===== ПЛАВАЮЩИЙ КОНТЕЙНЕР (ПО ЧАСОВОЙ СТРЕЛКЕ) ===== */
-        .container {
+        .interface-wrapper {
             position: relative;
             z-index: 1;
+            width: 100%;
             max-width: 820px;
+            margin: 0 auto;
+            animation: floatInterface 20s linear infinite;
+            transform-origin: center center;
+        }
+
+        @keyframes floatInterface {
+            0% { transform: translate(0px, 0px) rotate(0deg); }
+            12.5% { transform: translate(5px, -3px) rotate(0.3deg); }
+            25% { transform: translate(8px, 0px) rotate(0deg); }
+            37.5% { transform: translate(5px, 3px) rotate(-0.3deg); }
+            50% { transform: translate(0px, 5px) rotate(0deg); }
+            62.5% { transform: translate(-5px, 3px) rotate(0.3deg); }
+            75% { transform: translate(-8px, 0px) rotate(0deg); }
+            87.5% { transform: translate(-5px, -3px) rotate(-0.3deg); }
+            100% { transform: translate(0px, 0px) rotate(0deg); }
+        }
+
+        .container {
             width: 100%;
             background: rgba(17, 17, 17, 0.92);
             border-radius: 24px;
@@ -161,41 +122,23 @@
             box-shadow: 0 0 60px rgba(255, 0, 0, 0.12), inset 0 0 80px rgba(255, 0, 0, 0.03);
             border: 1px solid #2a1a1a;
             backdrop-filter: blur(2px);
-            animation: floatAround 20s linear infinite;
-            transform-origin: center center;
+            max-height: 90vh;
+            overflow-y: auto;
+            transition: all 0.5s ease;
         }
 
-        @keyframes floatAround {
-            0% {
-                transform: translate(0px, 0px) rotate(0deg);
-            }
-            12.5% {
-                transform: translate(8px, -5px) rotate(0.5deg);
-            }
-            25% {
-                transform: translate(12px, 0px) rotate(0deg);
-            }
-            37.5% {
-                transform: translate(8px, 5px) rotate(-0.5deg);
-            }
-            50% {
-                transform: translate(0px, 8px) rotate(0deg);
-            }
-            62.5% {
-                transform: translate(-8px, 5px) rotate(0.5deg);
-            }
-            75% {
-                transform: translate(-12px, 0px) rotate(0deg);
-            }
-            87.5% {
-                transform: translate(-8px, -5px) rotate(-0.5deg);
-            }
-            100% {
-                transform: translate(0px, 0px) rotate(0deg);
-            }
+        .container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .container::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 10px;
+        }
+        .container::-webkit-scrollbar-thumb {
+            background: #ff4d4d;
+            border-radius: 10px;
         }
 
-        /* ===== НАДПИСЬ (БЕЗ МИГАНИЙ) ===== */
         .title-wrapper {
             text-align: center;
             margin-bottom: 30px;
@@ -224,7 +167,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Полосы на надписи (каждые 2 буквы) - без мигания */
         .title-stripes {
             position: relative;
             display: inline-block;
@@ -253,7 +195,6 @@
             mix-blend-mode: overlay;
         }
 
-        /* Лёгкий глитч без мигания */
         .title-glitch {
             position: absolute;
             top: 0;
@@ -270,7 +211,6 @@
             border-radius: 4px;
         }
 
-        /* Статичная искра (без анимации) */
         .title-sparkle {
             position: absolute;
             top: -15px;
@@ -281,12 +221,12 @@
             filter: drop-shadow(0 0 20px #66ff66);
         }
 
-        /* ===== ЛОК-СКРИН ===== */
         .lock-screen {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 25px;
+            transition: all 0.5s ease;
         }
 
         .lock-screen label {
@@ -346,7 +286,6 @@
             text-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
         }
 
-        /* ===== КОНТЕНТ ===== */
         .content {
             display: none;
             flex-direction: column;
@@ -357,7 +296,6 @@
             display: flex;
         }
 
-        /* ===== ЗАПИСИ (ПЛАВНОЕ ПОЯВЛЕНИЕ БЕЗ МИГАНИЯ) ===== */
         .record {
             background: #141010;
             border-left: 6px solid #ff1a1a;
@@ -410,7 +348,6 @@
             font-weight: 600;
         }
 
-        /* ===== ОПРОС ===== */
         .poll-section {
             margin-top: 20px;
             padding: 24px 20px 20px;
@@ -513,7 +450,6 @@
             letter-spacing: 2px;
         }
 
-        /* ===== КОММЕНТАРИИ (ТОЛЬКО ДЛЯ ВАС) ===== */
         .comments-section {
             margin-top: 20px;
             padding: 24px 20px 20px;
@@ -622,7 +558,138 @@
             padding: 10px 0;
         }
 
-        /* ===== ФЕЙЕРВЕРК ===== */
+        .secret-room {
+            display: none;
+            flex-direction: column;
+            gap: 25px;
+            padding: 20px 0;
+        }
+
+        .secret-room.active {
+            display: flex;
+        }
+
+        .secret-room .secret-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            text-align: center;
+            background: linear-gradient(135deg, #b366ff, #7a4dff, #4d4dff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 60px rgba(102, 51, 255, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .secret-room .secret-text {
+            background: rgba(30, 20, 50, 0.6);
+            border-left: 6px solid #7a4dff;
+            border-radius: 16px;
+            padding: 24px 28px;
+            color: #c9b3ff;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            box-shadow: 0 0 40px rgba(102, 51, 255, 0.05);
+        }
+
+        .secret-room .secret-poll {
+            background: rgba(30, 20, 50, 0.4);
+            border-radius: 16px;
+            padding: 24px 20px;
+            text-align: center;
+            border: 1px solid #3a2a6a;
+        }
+
+        .secret-room .secret-poll .poll-question {
+            color: #c9b3ff;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .secret-room .secret-poll .poll-buttons {
+            gap: 30px;
+        }
+
+        .secret-room .secret-poll .poll-btn {
+            min-width: 140px;
+            padding: 14px 40px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            border: 2px solid transparent;
+            transition: 0.3s;
+        }
+
+        .secret-poll-btn-yes {
+            background: #1a2a6a;
+            color: #aaccff;
+            box-shadow: 0 0 30px rgba(50, 50, 255, 0.2);
+        }
+
+        .secret-poll-btn-yes:hover {
+            background: #2a4a9a;
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(50, 50, 255, 0.4);
+        }
+
+        .secret-poll-btn-no {
+            background: #4a1a4a;
+            color: #ff99cc;
+            box-shadow: 0 0 30px rgba(200, 50, 255, 0.2);
+        }
+
+        .secret-poll-btn-no:hover {
+            background: #6a2a6a;
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(200, 50, 255, 0.4);
+        }
+
+        .secret-poll-btn.selected-yes {
+            background: #3a5aff;
+            color: #fff;
+            border-color: #66ff66;
+            box-shadow: 0 0 60px rgba(50, 100, 255, 0.6);
+        }
+
+        .secret-poll-btn.selected-no {
+            background: #aa33aa;
+            color: #fff;
+            border-color: #ff66ff;
+            box-shadow: 0 0 60px rgba(200, 50, 255, 0.6);
+        }
+
+        .secret-poll-result {
+            margin-top: 16px;
+            color: #8877aa;
+            font-size: 1rem;
+        }
+
+        .secret-poll-result span {
+            color: #c9b3ff;
+            font-weight: 600;
+        }
+
+        .secret-back-btn {
+            background: transparent;
+            border: 2px solid #7a4dff;
+            color: #b366ff;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            letter-spacing: 2px;
+            align-self: center;
+            margin-top: 10px;
+        }
+
+        .secret-back-btn:hover {
+            background: #7a4dff;
+            color: #0a0a0a;
+            box-shadow: 0 0 40px rgba(122, 77, 255, 0.3);
+            transform: scale(1.05);
+        }
+
         #fireworksCanvas {
             position: fixed;
             top: 0;
@@ -633,7 +700,6 @@
             z-index: 9999;
         }
 
-        /* ===== ФУТЕР ===== */
         .footer-note {
             text-align: right;
             margin-top: 10px;
@@ -651,26 +717,6 @@
             color: transparent;
         }
 
-        /* ===== АДАПТИВ ===== */
-        @media (max-width: 550px) {
-            .container { padding: 24px 16px; }
-            h1 { font-size: 2rem; }
-            .record { font-size: 0.95rem; padding: 16px 14px; }
-            .poll-btn { padding: 10px 24px; font-size: 1rem; min-width: 80px; }
-            .poll-question { font-size: 0.95rem; }
-            .comment-input-area input { min-width: 120px; }
-        }
-
-        .flash-error {
-            animation: flashRed 0.3s ease 3;
-        }
-
-        @keyframes flashRed {
-            0%, 100% { background-color: transparent; }
-            50% { background-color: rgba(255, 0, 0, 0.15); }
-        }
-
-        /* ===== ПАСХАЛКА: FNAF ===== */
         .fnaf-notification {
             position: fixed;
             bottom: 20px;
@@ -690,12 +736,6 @@
             pointer-events: none;
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-
-        /* ===== ЭКРАН ОШИБКИ FNAF (как в игре) ===== */
         .fnaf-error-screen {
             position: fixed;
             top: 0;
@@ -739,102 +779,200 @@
             0% { opacity: 0.6; transform: scale(0.98); }
             100% { opacity: 1; transform: scale(1.02); }
         }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        .flash-error {
+            animation: flashRed 0.3s ease 3;
+        }
+
+        @keyframes flashRed {
+            0%, 100% { background-color: transparent; }
+            50% { background-color: rgba(255, 0, 0, 0.15); }
+        }
+
+        @media (max-width: 550px) {
+            .container { padding: 24px 16px; }
+            h1 { font-size: 2rem; }
+            .record { font-size: 0.95rem; padding: 16px 14px; }
+            .poll-btn { padding: 10px 24px; font-size: 1rem; min-width: 80px; }
+            .poll-question { font-size: 0.95rem; }
+            .comment-input-area input { min-width: 120px; }
+            .secret-room .secret-title { font-size: 1.6rem; }
+            .secret-room .secret-text { font-size: 0.95rem; padding: 18px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- ФОН С ПОМЕХАМИ (ТОЛЬКО СЗАДИ) -->
     <div class="bg-layer">
         <div class="vhs-overlay"></div>
         <div class="vhs-noise"></div>
-        <div class="vhs-bars"></div>
-        <div class="vhs-glitch"></div>
     </div>
 
-    <!-- Холст для фейерверка -->
     <canvas id="fireworksCanvas"></canvas>
 
-    <!-- ГЛАВНЫЙ КОНТЕЙНЕР (ПЛАВАЕТ) -->
-    <div class="container" id="app">
+    <div class="interface-wrapper">
+        <div class="container" id="app">
 
-        <!-- НАДПИСЬ (БЕЗ МИГАНИЙ) -->
-        <div class="title-wrapper">
-            <div class="title-stripes">
-                <h1>🍉 ARBUZERS SECRETS</h1>
-                <div class="title-glitch"></div>
-            </div>
-            <div class="title-sparkle">✦</div>
-        </div>
-
-        <!-- ЛОК-СКРИН -->
-        <div class="lock-screen" id="lockScreen">
-            <label>🔐 ВВЕДИТЕ ПАРОЛЬ</label>
-            <input type="password" id="passwordInput" placeholder="• • • •" maxlength="10" autofocus />
-            <button id="unlockBtn">ВОЙТИ</button>
-            <div class="error-msg" id="errorMsg"></div>
-        </div>
-
-        <!-- КОНТЕНТ -->
-        <div class="content" id="contentArea">
-            <!-- Записи -->
-            <div class="record">
-                <strong>Запись первая:</strong><br />
-                "Арбузеры - рейд клан существоваший очень давно, но лишь в голове создателя. Уже после месяца нахождения в uotb, он понял, что совершил ошибку, но долго не мог уйти. В конечном итоге повернулся случай, и идея реализовалась"
-            </div>
-            <div class="record">
-                <strong>Запись вторая:</strong><br />
-                "Арбузеры - рейдеры, ни чёрные, ни белые. Список у Арбузеров не имеется лишь потому, что это бессмысленно. Если рейд не будет уголовно наказуем - мы беремся за дело"
-            </div>
-            <div class="record">
-                <strong>Запись третья:</strong><br />
-                "Арбузеры с трудом поддерживают идею KR, ведь для них - они были стержнем. Арбузеры ещё достаточное время будут именно РЕЙДЕРАМИ, а после мы уже решим наше будущее"
-            </div>
-
-            <!-- ОПРОС -->
-            <div class="poll-section" id="pollSection">
-                <div class="poll-question">
-                    ❓ Считаете ли вы Арбузеров достойными рейдерами, и есть ли у них будущее?
+            <div class="title-wrapper">
+                <div class="title-stripes">
+                    <h1>🍉 ARBUZERS SECRETS</h1>
+                    <div class="title-glitch"></div>
                 </div>
-                <div class="poll-buttons">
-                    <button class="poll-btn poll-btn-yes" id="pollYes">✅ ДА</button>
-                    <button class="poll-btn poll-btn-no" id="pollNo">❌ НЕТ</button>
-                </div>
-                <div class="poll-result" id="pollResult">
-                    Голосов: <span id="pollCountYes">0</span> ✅ · <span id="pollCountNo">0</span> ❌
-                </div>
-                <div class="poll-error-msg" id="pollError"></div>
+                <div class="title-sparkle">✦</div>
             </div>
 
-            <!-- КОММЕНТАРИИ (ТОЛЬКО ДЛЯ ВАС) -->
-            <div class="comments-section" id="commentsSection">
-                <div class="comments-title">💬 Оставить комментарий (видят только создатели)</div>
-                <div class="comments-list" id="commentsList">
-                    <div class="comment-empty">Пока нет комментариев. Будьте первым!</div>
-                </div>
-                <div class="comment-input-area">
-                    <input type="text" id="commentInput" placeholder="Напишите что-нибудь..." maxlength="200" />
-                    <button id="commentBtn">Отправить</button>
-                </div>
+            <div class="lock-screen" id="lockScreen">
+                <label>🔐 ВВЕДИТЕ ПАРОЛЬ</label>
+                <input type="password" id="passwordInput" placeholder="• • • •" maxlength="10" autofocus />
+                <button id="unlockBtn">ВОЙТИ</button>
+                <div class="error-msg" id="errorMsg"></div>
             </div>
 
-            <div class="footer-note">
-                <span>✦ ARBUZERS ✦</span>
+            <div class="content" id="contentArea">
+                <div class="record">
+                    <strong>Запись первая:</strong><br />
+                    "Арбузеры - рейд клан существоваший очень давно, но лишь в голове создателя. Уже после месяца нахождения в uotb, он понял, что совершил ошибку, но долго не мог уйти. В конечном итоге повернулся случай, и идея реализовалась"
+                </div>
+                <div class="record">
+                    <strong>Запись вторая:</strong><br />
+                    "Арбузеры - рейдеры, ни чёрные, ни белые. Список у Арбузеров не имеется лишь потому, что это бессмысленно. Если рейд не будет уголовно наказуем - мы беремся за дело"
+                </div>
+                <div class="record">
+                    <strong>Запись третья:</strong><br />
+                    "Арбузеры с трудом поддерживают идею KR, ведь для них - они были стержнем. Арбузеры ещё достаточное время будут именно РЕЙДЕРАМИ, а после мы уже решим наше будущее"
+                </div>
+
+                <div class="poll-section" id="pollSection">
+                    <div class="poll-question">
+                        ❓ Считаете ли вы Арбузеров достойными рейдерами, и есть ли у них будущее?
+                    </div>
+                    <div class="poll-buttons">
+                        <button class="poll-btn poll-btn-yes" id="pollYes">✅ ДА</button>
+                        <button class="poll-btn poll-btn-no" id="pollNo">❌ НЕТ</button>
+                    </div>
+                    <div class="poll-result" id="pollResult">
+                        Голосов: <span id="pollCountYes">0</span> ✅ · <span id="pollCountNo">0</span> ❌
+                    </div>
+                    <div class="poll-error-msg" id="pollError"></div>
+                </div>
+
+                <div class="comments-section" id="commentsSection">
+                    <div class="comments-title">💬 Оставить комментарий (видят только создатели)</div>
+                    <div class="comments-list" id="commentsList">
+                        <div class="comment-empty">Пока нет комментариев. Будьте первым!</div>
+                    </div>
+                    <div class="comment-input-area">
+                        <input type="text" id="commentInput" placeholder="Напишите что-нибудь..." maxlength="200" />
+                        <button id="commentBtn">Отправить</button>
+                    </div>
+                </div>
+
+                <div class="secret-room" id="secretRoom">
+                    <div class="secret-title">💜 Сообщение для пользователя</div>
+                    <div class="secret-text">
+                        Пользователь, подумай хорошо, стоит ли тебе это делать? Быть антирейдером лучше не стоит. Тебе стоит вернуться в то русло, которое было изначально. Одумайся, антирейдерство — не то, что я хотел. Я просто хочу лучшего. Ты способен на большее, чем просто противостоять. Вспомни, зачем ты начинал. Всё ещё можно изменить, пока не поздно. Сделай правильный выбор.
+                    </div>
+                    <div class="secret-poll" id="secretPoll">
+                        <div class="poll-question">❓ Подумаешь?</div>
+                        <div class="poll-buttons">
+                            <button class="poll-btn secret-poll-btn-yes" id="secretPollYes">✅ Да</button>
+                            <button class="poll-btn secret-poll-btn-no" id="secretPollNo">❌ Я всё уже решил</button>
+                        </div>
+                        <div class="secret-poll-result" id="secretPollResult">
+                            Выбор: <span id="secretPollDisplay">не сделан</span>
+                        </div>
+                    </div>
+                    <button class="secret-back-btn" id="secretBackBtn">← Вернуться</button>
+                </div>
+
+                <div class="footer-note">
+                    <span>✦ ARBUZERS ✦</span>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         // ============================================================
-        // 1. ВХОД ПО ПАРОЛЮ
+        // 1. ЗВУКИ
+        // ============================================================
+        const SoundFX = {
+            ctx: null,
+            init() {
+                if (!this.ctx) {
+                    this.ctx = new(window.AudioContext || window.webkitAudioContext)();
+                }
+                return this.ctx;
+            },
+            click() {
+                try {
+                    const ctx = this.init();
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.value = 800;
+                    gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(ctx.currentTime);
+                    osc.stop(ctx.currentTime + 0.08);
+                } catch(e) {}
+            },
+            error() {
+                try {
+                    const ctx = this.init();
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.value = 200;
+                    gain.gain.setValueAtTime(0.08, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(ctx.currentTime);
+                    osc.stop(ctx.currentTime + 0.3);
+                } catch(e) {}
+            },
+            success() {
+                try {
+                    const ctx = this.init();
+                    [523, 659, 784].forEach((freq, i) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.value = freq;
+                        gain.gain.setValueAtTime(0.08, ctx.currentTime + i * 0.1);
+                        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.1 + 0.15);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(ctx.currentTime + i * 0.1);
+                        osc.stop(ctx.currentTime + i * 0.1 + 0.15);
+                    });
+                } catch(e) {}
+            }
+        };
+
+        // ============================================================
+        // 2. ВХОД ПО ПАРОЛЮ
         // ============================================================
         (function() {
             const PASSWORD = "3417";
+            const SECRET_PASSWORD = "2305";
             const lockScreen = document.getElementById('lockScreen');
             const contentArea = document.getElementById('contentArea');
             const passwordInput = document.getElementById('passwordInput');
             const unlockBtn = document.getElementById('unlockBtn');
             const errorMsg = document.getElementById('errorMsg');
+            const secretRoom = document.getElementById('secretRoom');
+            const secretBackBtn = document.getElementById('secretBackBtn');
             let isLoggedIn = false;
+            let isInSecret = false;
 
             function showContent() {
                 lockScreen.style.display = 'none';
@@ -842,21 +980,60 @@
                 passwordInput.value = '';
                 errorMsg.textContent = '';
                 isLoggedIn = true;
-                // Загружаем комментарии после входа
                 loadComments();
-                // Активируем пасхалку
-                activateEasterEgg();
+            }
+
+            function showSecretRoom() {
+                lockScreen.style.display = 'none';
+                contentArea.classList.add('active');
+                document.querySelectorAll('.record, .poll-section, .comments-section, .footer-note').forEach(el => {
+                    el.style.display = 'none';
+                });
+                secretRoom.classList.add('active');
+                isInSecret = true;
+                passwordInput.value = '';
+                errorMsg.textContent = '';
+                isLoggedIn = true;
+                loadSecretPoll();
+            }
+
+            function goBackFromSecret() {
+                secretRoom.classList.remove('active');
+                document.querySelectorAll('.record, .poll-section, .comments-section, .footer-note').forEach(el => {
+                    el.style.display = '';
+                });
+                isInSecret = false;
             }
 
             function handleUnlock() {
                 const entered = passwordInput.value.trim();
+                SoundFX.click();
+
+                if (entered === SECRET_PASSWORD) {
+                    SoundFX.success();
+                    showSecretRoom();
+                    return;
+                }
+
                 if (entered === PASSWORD) {
+                    SoundFX.success();
                     showContent();
-                } else {
-                    errorMsg.textContent = '❌ Неверный пароль. Попробуйте снова.';
+                    return;
+                }
+
+                if (entered.includes('1987')) {
+                    SoundFX.error();
+                    playFnafMusic();
+                    errorMsg.textContent = '⚠️ СИСТЕМА ДАЛА СБОЙ...';
                     passwordInput.value = '';
                     passwordInput.focus();
+                    return;
                 }
+
+                SoundFX.error();
+                errorMsg.textContent = '❌ Неверный пароль. Попробуйте снова.';
+                passwordInput.value = '';
+                passwordInput.focus();
             }
 
             unlockBtn.addEventListener('click', handleUnlock);
@@ -867,15 +1044,20 @@
                 }
             });
 
+            secretBackBtn.addEventListener('click', () => {
+                SoundFX.click();
+                goBackFromSecret();
+            });
+
             passwordInput.focus();
 
-            // Экспортируем для пасхалки
             window.isLoggedIn = () => isLoggedIn;
+            window.isInSecret = () => isInSecret;
         })();
 
 
         // ============================================================
-        // 2. ОПРОС С ПЕРЕГОЛОСОВАНИЕМ
+        // 3. ОПРОС
         // ============================================================
         (function() {
             const pollYes = document.getElementById('pollYes');
@@ -928,6 +1110,8 @@
             }
 
             function handleVote(choice) {
+                SoundFX.click();
+
                 if (userVote === choice) {
                     if (choice === 'yes') {
                         votes.yes = Math.max(0, votes.yes - 1);
@@ -983,7 +1167,6 @@
                 setTimeout(() => document.getElementById('pollSection').classList.remove('flash-error'), 1000);
             }
 
-            // ===== ФЕЙЕРВЕРК =====
             let fireworksActive = false;
             let fwCanvas, fwCtx, particles = [];
 
@@ -1083,7 +1266,7 @@
 
 
         // ============================================================
-        // 3. КОММЕНТАРИИ (ТОЛЬКО ДЛЯ ВАС)
+        // 4. КОММЕНТАРИИ
         // ============================================================
         (function() {
             const COMMENTS_KEY = 'arbuzers_comments';
@@ -1125,13 +1308,13 @@
                     `;
                 });
                 commentsList.innerHTML = html;
-                // Скролл вниз
                 commentsList.scrollTop = commentsList.scrollHeight;
             }
 
             function addComment() {
                 const text = commentInput.value.trim();
                 if (!text) return;
+                SoundFX.click();
 
                 const stored = localStorage.getItem(COMMENTS_KEY);
                 let comments = [];
@@ -1159,178 +1342,176 @@
                 }
             });
 
-            // Загружаем при инициализации
             window.loadComments();
         })();
 
 
         // ============================================================
-        // 4. ПАСХАЛКА: 1987 → FNAF (ТОЛЬКО ПОСЛЕ ВХОДА)
+        // 5. СЕКРЕТНЫЙ ОПРОС
         // ============================================================
         (function() {
-            let fnafTriggered = false;
-            let keyBuffer = '';
+            const SECRET_POLL_KEY = 'arbuzers_secret_poll';
+            const pollYes = document.getElementById('secretPollYes');
+            const pollNo = document.getElementById('secretPollNo');
+            const display = document.getElementById('secretPollDisplay');
 
-            function activateEasterEgg() {
-                // Удаляем старые обработчики, чтобы не дублировать
-                document.removeEventListener('keydown', handleKeyPress);
-                document.removeEventListener('input', handleInput);
-                document.addEventListener('keydown', handleKeyPress);
-                document.addEventListener('input', handleInput);
-            }
-
-            function handleKeyPress(e) {
-                if (!window.isLoggedIn || !window.isLoggedIn()) return;
-                if (fnafTriggered) return;
-
-                if (e.key >= '0' && e.key <= '9') {
-                    keyBuffer += e.key;
-                    if (keyBuffer.length > 4) {
-                        keyBuffer = keyBuffer.slice(-4);
-                    }
-                    if (keyBuffer === '1987') {
-                        playFnafMusic();
-                        keyBuffer = '';
+            function loadSecretPoll() {
+                const stored = localStorage.getItem(SECRET_POLL_KEY);
+                if (stored) {
+                    display.textContent = stored === 'yes' ? '✅ Да' : '❌ Я всё уже решил';
+                    if (stored === 'yes') {
+                        pollYes.classList.add('selected-yes');
+                        pollNo.classList.remove('selected-no');
+                    } else if (stored === 'no') {
+                        pollNo.classList.add('selected-no');
+                        pollYes.classList.remove('selected-yes');
                     }
                 } else {
-                    keyBuffer = '';
+                    display.textContent = 'не сделан';
+                    pollYes.classList.remove('selected-yes');
+                    pollNo.classList.remove('selected-no');
                 }
             }
 
-            function handleInput(e) {
-                if (!window.isLoggedIn || !window.isLoggedIn()) return;
-                if (fnafTriggered) return;
-
-                if (e.target.id === 'passwordInput') {
-                    const val = e.target.value;
-                    if (val.includes('1987')) {
-                        playFnafMusic();
-                        e.target.value = val.replace('1987', '');
-                    }
+            function handleSecretVote(choice) {
+                SoundFX.click();
+                const stored = localStorage.getItem(SECRET_POLL_KEY);
+                if (stored) {
+                    // Не даём изменить ответ
+                    return;
                 }
-            }
-
-            function playFnafMusic() {
-                if (fnafTriggered) return;
-                fnafTriggered = true;
-
-                try {
-                    const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
-
-                    // === ТА САМАЯ МЕЛОДИЯ FNAF (КОГДА КОНЧАЕТСЯ ЭНЕРГИЯ) ===
-                    // Нота: D# (пониженная) - знаменитая "fnaf 1 song"
-                    const notes = [
-                        { freq: 466.16, dur: 0.2 }, // A#
-                        { freq: 466.16, dur: 0.2 },
-                        { freq: 466.16, dur: 0.2 },
-                        { freq: 466.16, dur: 0.2 },
-                        { freq: 466.16, dur: 0.4 },
-
-                        { freq: 415.30, dur: 0.2 }, // G#
-                        { freq: 415.30, dur: 0.2 },
-                        { freq: 415.30, dur: 0.2 },
-                        { freq: 415.30, dur: 0.2 },
-                        { freq: 415.30, dur: 0.4 },
-
-                        { freq: 369.99, dur: 0.2 }, // F#
-                        { freq: 369.99, dur: 0.2 },
-                        { freq: 369.99, dur: 0.2 },
-                        { freq: 369.99, dur: 0.2 },
-                        { freq: 369.99, dur: 0.4 },
-
-                        { freq: 311.13, dur: 0.4 }, // D#
-                        { freq: 311.13, dur: 0.4 },
-                        { freq: 311.13, dur: 0.4 },
-                        { freq: 311.13, dur: 0.4 },
-                        { freq: 311.13, dur: 0.4 },
-                        { freq: 311.13, dur: 0.4 },
-
-                        // Вторая часть (более быстрая)
-                        { freq: 466.16, dur: 0.15 },
-                        { freq: 466.16, dur: 0.15 },
-                        { freq: 466.16, dur: 0.15 },
-                        { freq: 466.16, dur: 0.15 },
-                        { freq: 466.16, dur: 0.3 },
-
-                        { freq: 415.30, dur: 0.15 },
-                        { freq: 415.30, dur: 0.15 },
-                        { freq: 415.30, dur: 0.15 },
-                        { freq: 415.30, dur: 0.15 },
-                        { freq: 415.30, dur: 0.3 },
-
-                        { freq: 369.99, dur: 0.15 },
-                        { freq: 369.99, dur: 0.15 },
-                        { freq: 369.99, dur: 0.15 },
-                        { freq: 369.99, dur: 0.15 },
-                        { freq: 369.99, dur: 0.3 },
-
-                        { freq: 311.13, dur: 0.3 },
-                        { freq: 311.13, dur: 0.3 },
-                        { freq: 311.13, dur: 0.3 },
-                        { freq: 311.13, dur: 0.3 },
-                        { freq: 311.13, dur: 0.3 },
-                        { freq: 311.13, dur: 0.3 },
-                    ];
-
-                    let time = 0;
-                    notes.forEach(note => {
-                        const osc = audioCtx.createOscillator();
-                        const gain = audioCtx.createGain();
-
-                        osc.type = 'sawtooth'; // Более зловещий звук
-                        osc.frequency.value = note.freq;
-                        gain.gain.setValueAtTime(0.12, audioCtx.currentTime + time);
-                        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + time + note.dur);
-
-                        osc.connect(gain);
-                        gain.connect(audioCtx.destination);
-
-                        osc.start(audioCtx.currentTime + time);
-                        osc.stop(audioCtx.currentTime + time + note.dur);
-
-                        time += note.dur + 0.01;
-                    });
-
-                    // Показываем экран как в FNAF
-                    showFnafScreen();
-                    showFnafNotification('🔴 FNAF 1987 • Power Outage! 🎵');
-
-                } catch (e) {
-                    console.log('Audio not supported');
+                localStorage.setItem(SECRET_POLL_KEY, choice);
+                display.textContent = choice === 'yes' ? '✅ Да' : '❌ Я всё уже решил';
+                if (choice === 'yes') {
+                    pollYes.classList.add('selected-yes');
+                    pollNo.classList.remove('selected-no');
+                } else {
+                    pollNo.classList.add('selected-no');
+                    pollYes.classList.remove('selected-yes');
                 }
+                SoundFX.success();
             }
 
-            function showFnafScreen() {
-                const div = document.createElement('div');
-                div.className = 'fnaf-error-screen';
-                div.innerHTML = `
-                    <h2>⚠️ ERROR</h2>
-                    <p>POWER OUTAGE • 1987</p>
-                    <p style="font-size:0.8rem; margin-top:30px; opacity:0.4;">🔴 • 🔴 • 🔴</p>
-                `;
-                document.body.appendChild(div);
+            pollYes.addEventListener('click', () => handleSecretVote('yes'));
+            pollNo.addEventListener('click', () => handleSecretVote('no'));
 
-                setTimeout(() => {
-                    div.style.animation = 'fnafFlicker 0.2s ease 8';
-                }, 100);
-
-                setTimeout(() => {
-                    div.remove();
-                }, 5000);
-            }
-
-            function showFnafNotification(text) {
-                const div = document.createElement('div');
-                div.className = 'fnaf-notification';
-                div.textContent = text;
-                document.body.appendChild(div);
-                setTimeout(() => div.remove(), 5000);
-            }
-
-            // Экспортируем
-            window.activateEasterEgg = activateEasterEgg;
-            window.playFnafMusic = playFnafMusic;
+            window.loadSecretPoll = loadSecretPoll;
         })();
+
+
+        // ============================================================
+        // 6. ПАСХАЛКА FNAF (ПРИ НАЖАТИИ НА ВОЙТИ)
+        // ============================================================
+        let fnafTriggered = false;
+
+        function playFnafMusic() {
+            if (fnafTriggered) return;
+            fnafTriggered = true;
+
+            try {
+                const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+
+                // Та самая мелодия из FNAF 1 (когда кончается энергия)
+                const notes = [
+                    { freq: 466.16, dur: 0.2 },
+                    { freq: 466.16, dur: 0.2 },
+                    { freq: 466.16, dur: 0.2 },
+                    { freq: 466.16, dur: 0.2 },
+                    { freq: 466.16, dur: 0.4 },
+                    { freq: 415.30, dur: 0.2 },
+                    { freq: 415.30, dur: 0.2 },
+                    { freq: 415.30, dur: 0.2 },
+                    { freq: 415.30, dur: 0.2 },
+                    { freq: 415.30, dur: 0.4 },
+                    { freq: 369.99, dur: 0.2 },
+                    { freq: 369.99, dur: 0.2 },
+                    { freq: 369.99, dur: 0.2 },
+                    { freq: 369.99, dur: 0.2 },
+                    { freq: 369.99, dur: 0.4 },
+                    { freq: 311.13, dur: 0.4 },
+                    { freq: 311.13, dur: 0.4 },
+                    { freq: 311.13, dur: 0.4 },
+                    { freq: 311.13, dur: 0.4 },
+                    { freq: 311.13, dur: 0.4 },
+                    { freq: 311.13, dur: 0.4 },
+                    { freq: 466.16, dur: 0.15 },
+                    { freq: 466.16, dur: 0.15 },
+                    { freq: 466.16, dur: 0.15 },
+                    { freq: 466.16, dur: 0.15 },
+                    { freq: 466.16, dur: 0.3 },
+                    { freq: 415.30, dur: 0.15 },
+                    { freq: 415.30, dur: 0.15 },
+                    { freq: 415.30, dur: 0.15 },
+                    { freq: 415.30, dur: 0.15 },
+                    { freq: 415.30, dur: 0.3 },
+                    { freq: 369.99, dur: 0.15 },
+                    { freq: 369.99, dur: 0.15 },
+                    { freq: 369.99, dur: 0.15 },
+                    { freq: 369.99, dur: 0.15 },
+                    { freq: 369.99, dur: 0.3 },
+                    { freq: 311.13, dur: 0.3 },
+                    { freq: 311.13, dur: 0.3 },
+                    { freq: 311.13, dur: 0.3 },
+                    { freq: 311.13, dur: 0.3 },
+                    { freq: 311.13, dur: 0.3 },
+                    { freq: 311.13, dur: 0.3 },
+                ];
+
+                let time = 0;
+                notes.forEach(note => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.value = note.freq;
+                    gain.gain.setValueAtTime(0.12, audioCtx.currentTime + time);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + time + note.dur);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(audioCtx.currentTime + time);
+                    osc.stop(audioCtx.currentTime + time + note.dur);
+                    time += note.dur + 0.01;
+                });
+
+                showFnafScreen();
+
+            } catch (e) {
+                console.log('Audio not supported');
+            }
+        }
+
+        function showFnafScreen() {
+            const div = document.createElement('div');
+            div.className = 'fnaf-error-screen';
+            div.innerHTML = `
+                <h2>⚠️ ERROR</h2>
+                <p>POWER OUTAGE • 1987</p>
+                <p style="font-size:0.8rem; margin-top:30px; opacity:0.4;">🔴 • 🔴 • 🔴</p>
+            `;
+            document.body.appendChild(div);
+
+            setTimeout(() => {
+                div.style.animation = 'fnafFlicker 0.2s ease 8';
+            }, 100);
+
+            setTimeout(() => {
+                div.remove();
+                fnafTriggered = false;
+            }, 5000);
+        }
+
+        // ============================================================
+        // 7. ЗВУКИ ДЛЯ ВСЕХ КНОПОК
+        // ============================================================
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('button') || e.target.closest('.poll-btn')) {
+                // Звук уже проигрывается в обработчиках
+            }
+        });
+
+        console.log('🍉 ARBUZERS SECRETS v2.0');
+        console.log('🔑 Пароль: 3417');
+        console.log('🔐 Секретная комната: 2305');
+        console.log('🎃 Пасхалка: 1987 (при вводе)');
     </script>
 
 </body>
