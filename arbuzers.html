@@ -51,52 +51,7 @@
             background: radial-gradient(ellipse at center, #0a0a2a 0%, #0a0a4a 70%);
         }
 
-        .stars {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: twinkle 3s ease-in-out infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-
-        .floating-particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.5;
-            animation: floatParticle 10s linear infinite;
-        }
-
-        @keyframes floatParticle {
-            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-            10% { opacity: 0.7; }
-            90% { opacity: 0.7; }
-            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
-        }
-
+        /* ФОН БЕЗ ЧАСТИЦ (только VHS) */
         .vhs-overlay {
             position: absolute;
             top: 0;
@@ -195,6 +150,7 @@
             100% { transform: translate(-6%, -6%); }
         }
 
+        /* Плавающий интерфейс */
         .interface-wrapper {
             position: relative;
             z-index: 1;
@@ -1539,8 +1495,6 @@
 <body>
 
     <div class="bg-layer">
-        <div class="stars" id="starsContainer"></div>
-        <div class="floating-particles" id="particlesContainer"></div>
         <div class="vhs-overlay"></div>
         <div class="vhs-noise"></div>
         <div class="vhs-glitch-line"></div>
@@ -1569,7 +1523,6 @@
         <button class="menu-item" data-tab="leaders">🏆 Лидеры</button>
         <button class="menu-item" data-tab="shop">🛒 Магазин</button>
         <button class="menu-item" data-tab="game">🎮 Мини-игра</button>
-        <button class="menu-item private" data-tab="secrets">🔐 Особые секреты</button>
         <button class="menu-item" data-tab="profile">👤 Профиль</button>
     </div>
 
@@ -1756,26 +1709,6 @@
                     </div>
                 </div>
 
-                <!-- ОСОБЫЕ СЕКРЕТЫ -->
-                <div class="tab-content" id="tab-secrets">
-                    <div class="secret-room" id="secretRoom">
-                        <div class="secret-title">💜 Сообщение для пользователя</div>
-                        <div class="secret-text">
-                            Пользователь, подумай хорошо, стоит ли тебе это делать? Быть антирейдером лучше не стоит. Тебе стоит вернуться в то русло, которое было изначально. Одумайся, антирейдерство — не то, что я хотел. Я просто хочу лучшего. Ты способен на большее, чем просто противостоять. Вспомни, зачем ты начинал. Всё ещё можно изменить, пока не поздно. Сделай правильный выбор.
-                        </div>
-                        <div class="secret-poll" id="secretPoll">
-                            <div class="poll-question">❓ Подумаешь?</div>
-                            <div class="poll-buttons">
-                                <button class="poll-btn secret-poll-btn-yes" id="secretPollYes">✅ Да</button>
-                                <button class="poll-btn secret-poll-btn-no" id="secretPollNo">❌ Я всё уже решил</button>
-                            </div>
-                            <div class="secret-poll-result" id="secretPollResult">
-                                Выбор: <span id="secretPollDisplay">не сделан</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- ПРОФИЛЬ -->
                 <div class="tab-content" id="tab-profile">
                     <div class="profile-card">
@@ -1842,60 +1775,22 @@
         };
 
         // ============================================================
-        // ЗАШИФРОВАННЫЕ ПАРОЛИ
+        // ПАРОЛИ (ОБФУСКАЦИЯ - разбивка на части)
         // ============================================================
-        const SECRET_KEY = 0x5A;
+        const MAIN_PART1 = "34";
+        const MAIN_PART2 = "15";
+        const SECRET_PART1 = "23";
+        const SECRET_PART2 = "05";
+        const EASTER_PART1 = "19";
+        const EASTER_PART2 = "87";
 
-        const ENCRYPTED_MAIN_PASSWORD = [0x37, 0x36, 0x39, 0x35]; // "3415"
-        const ENCRYPTED_SECRET_PASSWORD = [0x2E, 0x2D, 0x30, 0x2F]; // "2305"
-        const ENCRYPTED_EASTER_PASSWORD = [0x24, 0x23, 0x22, 0x2D]; // "1987"
-
-        function decrypt(arr) {
-            return arr.map(x => x ^ SECRET_KEY).join('');
+        function getPasswords() {
+            return {
+                main: MAIN_PART1 + MAIN_PART2,
+                secret: SECRET_PART1 + SECRET_PART2,
+                easter: EASTER_PART1 + EASTER_PART2
+            };
         }
-
-        function checkPassword(input) {
-            const main = decrypt(ENCRYPTED_MAIN_PASSWORD);
-            const secret = decrypt(ENCRYPTED_SECRET_PASSWORD);
-            const easter = decrypt(ENCRYPTED_EASTER_PASSWORD);
-
-            if (input === main) return 'main';
-            if (input === secret) return 'secret';
-            if (input === easter) return 'easter';
-            return null;
-        }
-
-        // ============================================================
-        // АНИМИРОВАННЫЙ ФОН
-        // ============================================================
-        (function() {
-            const starsContainer = document.getElementById('starsContainer');
-            const particlesContainer = document.getElementById('particlesContainer');
-
-            for (let i = 0; i < 50; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.width = Math.random() * 3 + 1 + 'px';
-                star.style.height = star.style.width;
-                star.style.animationDelay = Math.random() * 3 + 's';
-                starsContainer.appendChild(star);
-            }
-
-            const colors = ['#ff4444', '#66ff66', '#ffaa00', '#44ddff'];
-            for (let i = 0; i < 20; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.width = Math.random() * 8 + 4 + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.animationDuration = Math.random() * 10 + 5 + 's';
-                particle.style.animationDelay = Math.random() * 10 + 's';
-                particlesContainer.appendChild(particle);
-            }
-        })();
 
         // ============================================================
         // МЕНЮ
@@ -1986,21 +1881,21 @@
         function handleUnlock() {
             const entered = passwordInput.value.trim();
             SoundFX.click();
-            const result = checkPassword(entered);
+            const passwords = getPasswords();
 
-            if (result === 'main') {
+            if (entered === passwords.main) {
                 SoundFX.success();
                 showContent();
                 return;
             }
 
-            if (result === 'secret') {
+            if (entered === passwords.secret) {
                 SoundFX.success();
                 showSecretRoom();
                 return;
             }
 
-            if (result === 'easter') {
+            if (entered === passwords.easter) {
                 SoundFX.error();
                 playFnafMusic();
                 errorMsg.textContent = '⚠️ СИСТЕМА ДАЛА СБОЙ...';
@@ -2190,13 +2085,11 @@
                     return;
                 }
 
-                // Списываем у отправителя
                 clickerData.money -= amount;
                 localStorage.setItem('arbuzers_clicker', JSON.stringify(clickerData));
                 money = clickerData.money;
                 updateUI();
 
-                // Добавляем получателю (если он есть в лидерах)
                 const leaders = JSON.parse(localStorage.getItem('arbuzers_leaders') || '[]');
                 const recipient = leaders.find(l => l.name === name);
                 if (recipient) {
@@ -2599,7 +2492,7 @@
             setTimeout(() => div.remove(), 5000);
         }
 
-        console.log('🍉 ARBUZERS SECRETS v10.0');
+        console.log('🍉 ARBUZERS SECRETS v11.0');
     </script>
 </body>
     </html>
