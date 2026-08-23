@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>ARBUZERS SECRETS</title>
     <style>
         * {
@@ -149,7 +149,7 @@
             100% { transform: translate(-6%, -6%); }
         }
 
-        /* ПЛАВАЮЩИЙ ИНТЕРФЕЙС - ПЛАВНОЕ КРУГОВОЕ ДВИЖЕНИЕ */
+        /* ПЛАВАЮЩИЙ ИНТЕРФЕЙС */
         .interface-wrapper {
             position: relative;
             z-index: 1;
@@ -810,6 +810,7 @@
             pointer-events: none;
         }
 
+        /* ПАСХАЛКА - ERROR ПО ЦЕНТРУ */
         .fnaf-error-screen {
             position: fixed;
             top: 0;
@@ -822,6 +823,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            text-align: center;
             animation: fnafFlicker 0.15s ease 5;
             pointer-events: none;
         }
@@ -832,6 +834,7 @@
             font-family: 'Courier New', monospace;
             text-shadow: 0 0 60px rgba(255, 0, 0, 0.5);
             letter-spacing: 8px;
+            margin: 0;
             animation: errorPulse 0.5s ease-in-out infinite alternate;
         }
 
@@ -898,19 +901,309 @@
             animation: fadeInUp 0.3s ease;
         }
 
-        @media (max-width: 550px) {
-            .container { padding: 24px 16px; }
-            h1 { font-size: 2rem; }
-            .record { font-size: 0.95rem; padding: 16px 14px; }
-            .poll-btn { padding: 10px 24px; font-size: 1rem; min-width: 80px; }
-            .poll-question { font-size: 0.95rem; }
-            .comment-input-area input { min-width: 120px; }
-            .secret-room .secret-title { font-size: 1.6rem; }
-            .secret-room .secret-text { font-size: 0.95rem; padding: 18px; }
+        /* ===== АДАПТИВ ДЛЯ ТЕЛЕФОНА ===== */
+        .is-mobile .interface-wrapper {
+            max-width: 100%;
+            padding: 10px;
+        }
+
+        .is-mobile .container {
+            padding: 20px 15px;
+            border-radius: 16px;
+            max-height: 95vh;
+        }
+
+        .is-mobile h1 {
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+
+        .is-mobile .record {
+            font-size: 0.95rem;
+            padding: 16px 14px;
+            border-left-width: 4px;
+        }
+
+        .is-mobile .poll-btn {
+            padding: 10px 24px;
+            font-size: 1rem;
+            min-width: 80px;
+        }
+
+        .is-mobile .poll-question {
+            font-size: 0.95rem;
+        }
+
+        .is-mobile .comment-input-area input {
+            min-width: 120px;
+            font-size: 0.9rem;
+        }
+
+        .is-mobile .secret-room .secret-title {
+            font-size: 1.5rem;
+        }
+
+        .is-mobile .secret-room .secret-text {
+            font-size: 0.95rem;
+            padding: 18px;
+        }
+
+        .is-mobile .lock-screen input {
+            max-width: 220px;
+            font-size: 1.1rem;
+            padding: 12px 18px;
+        }
+
+        .is-mobile .lock-screen button {
+            padding: 10px 36px;
+            font-size: 1.1rem;
+        }
+
+        .is-mobile .back-btn {
+            top: 10px;
+            left: 10px;
+            padding: 8px 16px;
+            font-size: 1rem;
+        }
+
+        .is-mobile .fnaf-error-screen h2 {
+            font-size: 3rem;
+            letter-spacing: 5px;
+        }
+
+        .is-mobile .fnaf-error-screen p {
+            font-size: 1rem;
+        }
+
+        /* ===== МЕНЮ-ГАМБУРГЕР ===== */
+        .menu-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #ff4444;
+            border-radius: 12px;
+            padding: 10px 14px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            background: #ff4444;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+        }
+
+        .menu-btn .line {
+            width: 24px;
+            height: 3px;
+            background: #fff;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        .menu-btn.open .line:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-btn.open .line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-btn.open .line:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            border-left: 2px solid #ff4444;
+            z-index: 10001;
+            transition: right 0.4s ease;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .side-menu.open {
+            right: 0;
+        }
+
+        .menu-item {
+            background: transparent;
+            border: 2px solid #ff4444;
+            color: #ff4444;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .menu-item:hover {
+            background: #ff4444;
+            color: #0a0a0a;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+            transform: translateX(-5px);
+        }
+
+        .menu-item.active {
+            background: #ff4444;
+            color: #0a0a0a;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.6);
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            display: none;
+        }
+
+        .menu-overlay.active {
+            display: block;
+        }
+
+        /* ===== РАЗДЕЛЫ ===== */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            animation: contentFadeIn 0.5s ease;
+        }
+
+        .quote-card {
+            background: rgba(20, 20, 20, 0.9);
+            border: 2px solid #ff4444;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            color: #ffcccc;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .quote-card:hover {
+            border-color: #66ff66;
+            box-shadow: 0 0 30px rgba(102, 255, 102, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .quote-card::before {
+            content: "❝";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 2rem;
+            color: #ff4444;
+        }
+
+        .quote-card .quote-text {
+            padding-left: 30px;
+        }
+
+        /* Тёмная/светлая тема */
+        body.light-theme {
+            background: #f0f0f0;
+        }
+
+        body.light-theme .bg-layer {
+            background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 50%, #f0f0f0 100%);
+        }
+
+        body.light-theme .container {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: #ddd;
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .lock-screen input {
+            background: #fff;
+            border-color: #ddd;
+            color: #333;
+        }
+
+        body.light-theme .record {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        body.light-theme .comment-item {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10000;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #ff4444;
+            color: #ff4444;
+            padding: 10px 15px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: #ff4444;
+            color: #fff;
+        }
+
+        .theme-toggle.light {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: #333;
+            color: #333;
         }
     </style>
 </head>
 <body>
+
+    <!-- КНОПКИ -->
+    <button class="back-btn" id="backBtn">← Назад</button>
+    <button class="theme-toggle" id="themeBtn">🌙</button>
+    <button class="menu-btn" id="menuBtn">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+    </button>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- БОКОВОЕ МЕНЮ -->
+    <div class="side-menu" id="sideMenu">
+        <h3 style="color:#ff4444; text-align:center; margin-bottom:20px;">📂 РАЗДЕЛЫ</h3>
+        <button class="menu-item active" data-tab="home">🏠 Главная</button>
+        <button class="menu-item" data-tab="facts">📜 Факты</button>
+        <button class="menu-item" data-tab="opinions">💭 Мнения</button>
+        <button class="menu-item" data-tab="secrets">🔐 Секреты</button>
+        <button class="menu-item" data-tab="community">💬 Обсуждение</button>
+    </div>
 
     <div class="bg-layer">
         <div class="vhs-overlay"></div>
@@ -920,8 +1213,6 @@
     </div>
 
     <canvas id="fireworksCanvas"></canvas>
-
-    <button class="back-btn" id="backBtn">← Назад</button>
 
     <div class="interface-wrapper">
         <div class="container" id="app">
@@ -942,44 +1233,103 @@
             </div>
 
             <div class="content" id="contentArea">
-                <div class="record">
-                    <strong>Запись первая:</strong><br />
-                    "Арбузеры - рейд клан существоваший очень давно, но лишь в голове создателя. Уже после месяца нахождения в uotb, он понял, что совершил ошибку, но долго не мог уйти. В конечном итоге повернулся случай, и идея реализовалась"
-                </div>
-                <div class="record">
-                    <strong>Запись вторая:</strong><br />
-                    "Арбузеры - рейдеры, ни чёрные, ни белые. Список у Арбузеров не имеется лишь потому, что это бессмысленно. Если рейд не будет уголовно наказуем - мы беремся за дело"
-                </div>
-                <div class="record">
-                    <strong>Запись третья:</strong><br />
-                    "Арбузеры с трудом поддерживают идею KR, ведь для них - они были стержнем. Арбузеры ещё достаточное время будут именно РЕЙДЕРАМИ, а после мы уже решим наше будущее"
+
+                <!-- ГЛАВНАЯ -->
+                <div class="tab-content active" id="tab-home">
+                    <div class="record">
+                        <strong>Запись первая:</strong><br />
+                        "Арбузеры - рейд клан существоваший очень давно, но лишь в голове создателя. Уже после месяца нахождения в uotb, он понял, что совершил ошибку, но долго не мог уйти. В конечном итоге повернулся случай, и идея реализовалась"
+                    </div>
+                    <div class="record">
+                        <strong>Запись вторая:</strong><br />
+                        "Арбузеры - рейдеры, ни чёрные, ни белые. Список у Арбузеров не имеется лишь потому, что это бессмысленно. Если рейд не будет уголовно наказуем - мы беремся за дело"
+                    </div>
+                    <div class="record">
+                        <strong>Запись третья:</strong><br />
+                        "Арбузеры с трудом поддерживают идею KR, ведь для них - они были стержнем. Арбузеры ещё достаточное время будут именно РЕЙДЕРАМИ, а после мы уже решим наше будущее"
+                    </div>
+                    <div class="record">
+                        <strong>⭐ Цитата дня:</strong><br />
+                        "Арбузеры - не плохие, просто у них своя философия"
+                    </div>
+                    <div class="record">
+                        <strong>⭐ Цитата дня:</strong><br />
+                        "Арбузеры, как настоящие арбузы, только пытаться есть их - опасно для канала/чата"
+                    </div>
+                    <div class="record">
+                        <strong>⭐ Цитата дня:</strong><br />
+                        "Если ты читаешь это, значит тебе сегодня повезёт"
+                    </div>
+
+                    <div class="poll-section" id="pollSection">
+                        <div class="poll-question">
+                            ❓ Считаете ли вы Арбузеров достойными рейдерами, и есть ли у них будущее?
+                        </div>
+                        <div class="poll-buttons">
+                            <button class="poll-btn poll-btn-yes" id="pollYes">✅ ДА</button>
+                            <button class="poll-btn poll-btn-no" id="pollNo">❌ НЕТ</button>
+                        </div>
+                        <div class="poll-result" id="pollResult">
+                            Голосов: <span id="pollCountYes">0</span> ✅ · <span id="pollCountNo">0</span> ❌
+                        </div>
+                        <div class="poll-error-msg" id="pollError"></div>
+                    </div>
                 </div>
 
-                <div class="poll-section" id="pollSection">
-                    <div class="poll-question">
-                        ❓ Считаете ли вы Арбузеров достойными рейдерами, и есть ли у них будущее?
+                <!-- ФАКТЫ -->
+                <div class="tab-content" id="tab-facts">
+                    <div class="quote-card">
+                        <div class="quote-text">Арбузеры - не плохие, просто у них своя философия</div>
                     </div>
-                    <div class="poll-buttons">
-                        <button class="poll-btn poll-btn-yes" id="pollYes">✅ ДА</button>
-                        <button class="poll-btn poll-btn-no" id="pollNo">❌ НЕТ</button>
+                    <div class="quote-card">
+                        <div class="quote-text">Арбузеры, как настоящие арбузы, только пытаться есть их - опасно для канала/чата</div>
                     </div>
-                    <div class="poll-result" id="pollResult">
-                        Голосов: <span id="pollCountYes">0</span> ✅ · <span id="pollCountNo">0</span> ❌
-                    </div>
-                    <div class="poll-error-msg" id="pollError"></div>
-                </div>
-
-                <div class="comments-section" id="commentsSection">
-                    <div class="comments-title">💬 Комментарии</div>
-                    <div class="comments-list" id="commentsList">
-                        <div class="comment-empty">Пока нет комментариев. Будьте первым!</div>
-                    </div>
-                    <div class="comment-input-area">
-                        <input type="text" id="commentInput" placeholder="Напишите что-нибудь..." maxlength="200" />
-                        <button id="commentBtn">Отправить</button>
+                    <div class="quote-card">
+                        <div class="quote-text">Если ты читаешь это, значит тебе сегодня повезёт</div>
                     </div>
                 </div>
 
+                <!-- МНЕНИЯ -->
+                <div class="tab-content" id="tab-opinions">
+                    <div class="quote-card">
+                        <div class="quote-text">Лично я считаю, что Арбузеры — это не просто клан, а целая философия. Они не ищут лёгких путей.</div>
+                    </div>
+                    <div class="quote-card">
+                        <div class="quote-text">Мне кажется, их рейды — это искусство. Не каждый может так красиво разрушать чаты.</div>
+                    </div>
+                    <div class="quote-card">
+                        <div class="quote-text">Арбузеры — загадка. Чем больше о них узнаёшь, тем меньше понимаешь. Но это и есть их сила.</div>
+                    </div>
+                </div>
+
+                <!-- СЕКРЕТЫ -->
+                <div class="tab-content" id="tab-secrets">
+                    <div class="quote-card">
+                        <div class="quote-text">Внутри Арбузеров есть древний кодекс, который передаётся только избранным.</div>
+                    </div>
+                    <div class="quote-card">
+                        <div class="quote-text">Каждый арбузер обязан знать 3 вещи: честь, хитрость, и когда уйти.</div>
+                    </div>
+                    <div class="quote-card">
+                        <div class="quote-text">Настоящий лидер Арбузеров никогда не раскрывает своё лицо. Только голос.</div>
+                    </div>
+                </div>
+
+                <!-- ОБСУЖДЕНИЕ -->
+                <div class="tab-content" id="tab-community">
+                    <div class="comments-section">
+                        <div class="comments-title">💬 Обсуждение комьюнити</div>
+                        <div class="comments-list" id="commentsList">
+                            <div class="comment-empty">Пока нет комментариев. Будьте первым!</div>
+                        </div>
+                        <div class="comment-input-area">
+                            <input type="text" id="commentInput" placeholder="Напишите что-нибудь..." maxlength="200" />
+                            <button id="commentBtn">Отправить</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- СЕКРЕТНАЯ КОМНАТА -->
                 <div class="secret-room" id="secretRoom">
                     <div class="secret-title">💜 Сообщение для пользователя</div>
                     <div class="secret-text">
@@ -1005,6 +1355,30 @@
     </div>
 
     <script>
+        // ============================================================
+        // 0. ОПРЕДЕЛЕНИЕ УСТРОЙСТВА
+        // ============================================================
+        function detectDevice() {
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+            const isTablet = /iPad|Tablet/i.test(navigator.userAgent) || (window.innerWidth >= 768 && window.innerWidth <= 1024);
+            const isDesktop = !isMobile && !isTablet;
+
+            if (isMobile) {
+                document.body.classList.add('is-mobile');
+                console.log('📱 Устройство: Мобильный телефон');
+            } else if (isTablet) {
+                document.body.classList.add('is-tablet');
+                console.log('📲 Устройство: Планшет');
+            } else {
+                document.body.classList.add('is-desktop');
+                console.log('💻 Устройство: Компьютер');
+            }
+
+            return { isMobile, isTablet, isDesktop };
+        }
+
+        const device = detectDevice();
+
         // ============================================================
         // 1. ЗВУКИ
         // ============================================================
@@ -1066,7 +1440,7 @@
         };
 
         // ============================================================
-        // 2. ВХОД ПО ПАРОЛЮ
+        // 2. ВХОД ПО ПАРОЛЮ И МЕНЮ
         // ============================================================
         (function() {
             const PASSWORD = "3417";
@@ -1079,8 +1453,51 @@
             const secretRoom = document.getElementById('secretRoom');
             const backBtn = document.getElementById('backBtn');
             const titleWrapper = document.getElementById('titleWrapper');
+            const menuBtn = document.getElementById('menuBtn');
+            const sideMenu = document.getElementById('sideMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            const themeBtn = document.getElementById('themeBtn');
             let isLoggedIn = false;
             let isInSecret = false;
+
+            // Меню
+            menuBtn.addEventListener('click', () => {
+                menuBtn.classList.toggle('open');
+                sideMenu.classList.toggle('open');
+                menuOverlay.classList.toggle('active');
+                SoundFX.click();
+            });
+
+            menuOverlay.addEventListener('click', () => {
+                menuBtn.classList.remove('open');
+                sideMenu.classList.remove('open');
+                menuOverlay.classList.remove('active');
+            });
+
+            // Переключение вкладок
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+                    
+                    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                    const tabId = 'tab-' + item.dataset.tab;
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    menuBtn.classList.remove('open');
+                    sideMenu.classList.remove('open');
+                    menuOverlay.classList.remove('active');
+                    SoundFX.click();
+                });
+            });
+
+            // Тема
+            themeBtn.addEventListener('click', () => {
+                document.body.classList.toggle('light-theme');
+                themeBtn.classList.toggle('light');
+                themeBtn.textContent = document.body.classList.contains('light-theme') ? '☀️' : '🌙';
+                SoundFX.click();
+            });
 
             function showContent() {
                 lockScreen.style.display = 'none';
@@ -1095,7 +1512,7 @@
             function showSecretRoom() {
                 lockScreen.style.display = 'none';
                 contentArea.classList.add('active');
-                document.querySelectorAll('.record, .poll-section, .comments-section, .footer-note').forEach(el => {
+                document.querySelectorAll('.tab-content').forEach(el => {
                     el.style.display = 'none';
                 });
                 secretRoom.classList.add('active');
@@ -1111,9 +1528,8 @@
 
             function goBack() {
                 if (isInSecret) {
-                    // Выход из секретной комнаты
                     secretRoom.classList.remove('active');
-                    document.querySelectorAll('.record, .poll-section, .comments-section, .footer-note').forEach(el => {
+                    document.querySelectorAll('.tab-content').forEach(el => {
                         el.style.display = '';
                     });
                     isInSecret = false;
@@ -1121,13 +1537,11 @@
                     titleWrapper.style.display = '';
                     backBtn.classList.remove('visible');
                     
-                    // Возвращаем на экран пароля
                     contentArea.classList.remove('active');
                     lockScreen.style.display = 'flex';
                     isLoggedIn = false;
                     passwordInput.focus();
                 } else if (isLoggedIn) {
-                    // Выход из основного контента
                     contentArea.classList.remove('active');
                     lockScreen.style.display = 'flex';
                     isLoggedIn = false;
@@ -1316,16 +1730,15 @@
                 for (let i = 0; i < count; i++) {
                     const angle = Math.random() * Math.PI * 2;
                     const speed = Math.random() * 8 + 4;
-                    // Фейерверк снизу вверх
                     const x = Math.random() * fwCanvas.width;
                     const y = fwCanvas.height + Math.random() * 50;
                     particles.push({
                         x: x,
                         y: y,
                         vx: Math.cos(angle) * speed * (Math.random() * 0.8 + 0.2),
-                        vy: Math.sin(angle) * speed * (Math.random() * 0.8 + 0.2) - 8, // Сильный вверх
+                        vy: Math.sin(angle) * speed * (Math.random() * 0.8 + 0.2) - 8,
                         life: 1,
-                        decay: Math.random() * 0.01 + 0.003, // Медленное затухание
+                        decay: Math.random() * 0.01 + 0.003,
                         size: Math.random() * 5 + 2,
                         color: colors[Math.floor(Math.random() * colors.length)]
                     });
@@ -1347,7 +1760,7 @@
                         const p = particles[i];
                         p.x += p.vx;
                         p.y += p.vy;
-                        p.vy += 0.04; // Медленное падение
+                        p.vy += 0.04;
                         p.life -= p.decay;
 
                         if (p.life <= 0) {
@@ -1355,7 +1768,6 @@
                             continue;
                         }
 
-                        // Плавное прозрачность
                         fwCtx.globalAlpha = p.life * p.life;
                         fwCtx.beginPath();
                         fwCtx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
@@ -1631,13 +2043,11 @@
         // 7. ДОПОЛНИТЕЛЬНЫЕ ФУНКЦИИ
         // ============================================================
         
-        // Перезапуск сайта
         function restartSite() {
             localStorage.clear();
             location.reload();
         }
 
-        // Горячие клавиши
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.key === 'r') {
                 e.preventDefault();
@@ -1645,11 +2055,20 @@
             }
         });
 
-        console.log('🍉 ARBUZERS SECRETS v4.0');
+        // Горячие клавиши для навигации
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                menuBtn.classList.remove('open');
+                sideMenu.classList.remove('open');
+                menuOverlay.classList.remove('active');
+            }
+        });
+
+        console.log('🍉 ARBUZERS SECRETS v6.0');
         console.log('🔑 Пароль: 3417');
         console.log('🔐 Секретная комната: 2305');
         console.log('🎃 Пасхалка: 1987 (при вводе)');
-        console.log('🖱️ Перезапуск: Ctrl+R');
+        console.log('📱 Устройство: ' + (device.isMobile ? 'Мобильный' : device.isTablet ? 'Планшет' : 'Компьютер'));
     </script>
 
 </body>
